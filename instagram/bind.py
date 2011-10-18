@@ -90,7 +90,7 @@ def bind_method(**config):
             status_code = content_obj['meta']['code']
             if status_code == 200:
                 if not self.objectify_response:
-                    return content_obj, None
+                    return content_obj, None, None
 
                 if self.response_type == 'list':
                     for entry in content_obj['data']:
@@ -98,16 +98,16 @@ def bind_method(**config):
                         response_objects.append(obj)
                 elif self.response_type == 'entry':
                     response_objects = self.root_class.object_from_dictionary(content_obj['data'])
-                return response_objects, content_obj.get('pagination', {}).get('next_url') 
+                return response_objects, content_obj.get('pagination', {}).get('next_url'), content_obj.get('pagination', {}).get('next_cursor')
             else:
                 raise InstagramAPIError(status_code, content_obj['meta']['error_type'], content_obj['meta']['error_message'])
 
         def _paginator_with_url(self, url, method="GET", body=None, headers={}):
             pages_read = 0
             while url and pages_read < self.max_pages:
-                 response_objects, url = self._do_api_request(url, method, body, headers)
+                 response_objects, url, cursor = self._do_api_request(url, method, body, headers)
                  pages_read += 1
-                 yield response_objects, url 
+                 yield response_objects, url, cursor 
             return
 
         def execute(self):
@@ -118,9 +118,9 @@ def bind_method(**config):
             if self.as_generator:
                 return self._paginator_with_url(url, method, body, headers)
             else:
-                content, next = self._do_api_request(url, method, body, headers)
+                content, next, cursor = self._do_api_request(url, method, body, headers)
             if self.paginates:
-                return content, next
+                return content, next, cursor
             else:
                 return content
 

@@ -97,6 +97,13 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class = Media,
                 paginates = True)
 
+    user_recent_media_dictionary = bind_method(
+                path = "/users/{user_id}/media/recent",
+                accepts_parameters = MEDIA_ACCEPT_PARAMETERS + ['user_id'],
+                root_class = Media,
+                paginates = True,
+            	objectify_response = False)
+
     user_search = bind_method(
                 path = "/users/search",
                 accepts_parameters = SEARCH_ACCEPT_PARAMETERS,
@@ -142,6 +149,13 @@ class InstagramAPI(oauth2.OAuth2API):
                 accepts_parameters = MEDIA_ACCEPT_PARAMETERS + ['tag_name'],
                 root_class = Media,
                 paginates = True)
+
+    tag_recent_media_dictionary = bind_method(
+                path = "/tags/{tag_name}/media/recent",
+                accepts_parameters = MEDIA_ACCEPT_PARAMETERS + ['tag_name'],
+                root_class = Media,
+                paginates = True,
+            	objectify_response = False)
 
     tag_search = bind_method(
                 path = "/tags/search",

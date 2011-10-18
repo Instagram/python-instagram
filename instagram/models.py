@@ -50,6 +50,8 @@ class Media(ApiModel):
 
         new_media.link = entry['link']
 
+	new_media.tags = entry['tags']
+
         return new_media
 
 class Tag(ApiModel):
@@ -91,7 +93,7 @@ class Location(ApiModel):
     @classmethod
     def object_from_dictionary(cls, entry):
         point = None
-        if entry['latitude']:
+	if 'latitude' in entry:
             point = Point(entry.get('latitude'),
                           entry.get('longitude'))
         location = cls(entry.get('id'),

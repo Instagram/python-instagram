@@ -28,9 +28,9 @@ Usage
 
     access_token = "..."
     api = InstagramAPI(access_token=access_token)
-    popular_media = api.popular_media(count=20)
-    for media in popular_media:
-        print media.images['high_resolution'].url
+    media_popular = api.media_popular(count=20)
+	for media in media_popular:
+	    print media.images['standard_resolution'].url
 
 Sample app
 ------
