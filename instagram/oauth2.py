@@ -204,5 +204,5 @@ class OAuth2Request(object):
     def make_request(self, url, method="GET", body=None, headers={}):
         if not 'User-Agent' in headers:
             headers.update({"User-Agent":"%s Python Client" % self.api.api_name})
-        http_obj = Http()
+        http_obj = Http(disable_ssl_certificate_validation=True)
         return http_obj.request(url, method, body=body, headers=headers)
