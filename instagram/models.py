@@ -115,8 +115,9 @@ class User(ApiModel):
 
 class Relationship(ApiModel):
 
-    def __init__(self, incoming_status="none", outgoing_status="none"):
+    def __init__(self, incoming_status="none", outgoing_status="none", target_user_is_private=False):
         self.incoming_status = incoming_status
         self.outgoing_status = outgoing_status
+        self.target_user_is_private = target_user_is_private
 
 
