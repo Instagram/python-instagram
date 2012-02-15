@@ -7,7 +7,7 @@ bottle.debug(True)
 CONFIG = {
     'client_id': '',
     'client_secret': '',
-    'redirect_uri': ''
+    'redirect_uri': 'http://localhost:8515/oauth_callback'
 }
 
 unauthenticated_api = client.InstagramAPI(**CONFIG)

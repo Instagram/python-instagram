@@ -28,16 +28,16 @@ Usage
 
     access_token = "..."
     api = InstagramAPI(access_token=access_token)
-    popular_media = api.popular_media(count=20)
+    popular_media = api.media_popular(count=20)
     for media in popular_media:
-        print media.images['high_resolution'].url
+        print media.images['standard_resolution'].url
 
 Sample app
 ------
 We also provide a one-file sample app using bottle (you'll have to 'pip install bottle' first). To try it out:
 
-  * Set your redirect URI to 'http://localhost:8515' in your dev profile
-  * Open up sample\_app.py, update it with your client\_id and secret
+  * Set your redirect URI to 'http://localhost:8515/outh_callback' in your dev profile
+  * Open up sample\_app.py, update it with your client\_id and secret, and set redirect URI to 'http://localhost:8515/outh_callback' 
   * Run the file; it will host a local server on port 8515.
   * Try visiting http://localhost:8515 in your browser
 
