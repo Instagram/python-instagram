@@ -45,9 +45,17 @@ class Media(ApiModel):
 
         new_media.created_time = timestamp_to_datetime(entry['created_time'])
 
-        if entry['location']:
+        try:
             new_media.location = Location.object_from_dictionary(entry['location'])
-
+        except KeyError:
+            new_media.location = None
+            
+        try:
+            new_media.caption = entry['caption']['text']
+        except (KeyError, TypeError):
+            new_media.caption = None
+        
+        
         new_media.link = entry['link']
 
         return new_media
@@ -91,13 +99,14 @@ class Location(ApiModel):
     @classmethod
     def object_from_dictionary(cls, entry):
         point = None
-        if entry['latitude']:
+        if entry.get('latitude', False) and entry.get('longitude', False):
             point = Point(entry.get('latitude'),
                           entry.get('longitude'))
-        location = cls(entry.get('id'),
-                       point,
-                       name=entry.get('name'))
-        return location
+            location = cls(entry.get('id'),
+                           point=point,
+                           name=entry.get('name'))
+            return location
+        return None
 
 class User(ApiModel):
 

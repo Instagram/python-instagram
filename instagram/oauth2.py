@@ -2,7 +2,7 @@ import simplejson
 import urllib
 from httplib2 import Http
 import mimetypes
-
+#disable_ssl_certificate_validation
 
 class OAuth2AuthExchangeError(Exception):
     def __init__(self, description):
@@ -90,7 +90,7 @@ class OAuth2AuthExchangeRequest(object):
         return self._url_for_authorize(scope = scope)
 
     def get_authorize_login_url(self, scope=None):
-        http_object = Http()
+        http_object = Http(disable_ssl_certificate_validation=True)
 
         url = self._url_for_authorize(scope = scope)
         response, content = http_object.request(url)
@@ -101,7 +101,7 @@ class OAuth2AuthExchangeRequest(object):
 
     def exchange_for_access_token(self, code=None, username=None, password=None, scope=None, user_id=None):
         data = self._data_for_exchange(code, username, password, scope = scope, user_id = user_id)
-        http_object = Http()
+        http_object = Http(disable_ssl_certificate_validation=True)
         url = self.api.access_token_url
         response, content = http_object.request(url, method="POST", body=data)
         parsed_content = simplejson.loads(content)
@@ -204,5 +204,5 @@ class OAuth2Request(object):
     def make_request(self, url, method="GET", body=None, headers={}):
         if not 'User-Agent' in headers:
             headers.update({"User-Agent":"%s Python Client" % self.api.api_name})
-        http_obj = Http()
+        http_obj = Http(disable_ssl_certificate_validation=True)
         return http_obj.request(url, method, body=body, headers=headers)
