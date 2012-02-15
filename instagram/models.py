@@ -48,6 +48,10 @@ class Media(ApiModel):
         if entry['location']:
             new_media.location = Location.object_from_dictionary(entry['location'])
 
+        new_media.caption = None
+        if entry['caption']:
+             new_media.caption = Comment.object_from_dictionary( entry['caption'] )
+
         new_media.link = entry['link']
 
         return new_media
@@ -111,8 +115,9 @@ class User(ApiModel):
 
 class Relationship(ApiModel):
 
-    def __init__(self, incoming_status="none", outgoing_status="none"):
+    def __init__(self, incoming_status="none", outgoing_status="none", target_user_is_private=False):
         self.incoming_status = incoming_status
         self.outgoing_status = outgoing_status
+        self.target_user_is_private = target_user_is_private
 
 
