@@ -82,7 +82,8 @@ def bind_method(**config):
                 self.path = self.path.replace(variable, value)
             self.path = self.path + '.%s' % self.api.format
 
-        def _do_api_request(self, url, method="GET", body=None, headers={}):
+        def _do_api_request(self, url, method="GET", body=None, headers=None):
+            headers = headers or {}
             response, content = OAuth2Request(self.api).make_request(url, method=method, body=body, headers=headers)
             if response['status'] == '503':
                 raise InstagramAPIError(response['status'], "Rate limited", "Your client is making too many request per second")
@@ -110,7 +111,8 @@ def bind_method(**config):
             else:
                 raise InstagramAPIError(status_code, content_obj['meta']['error_type'], content_obj['meta']['error_message'])
 
-        def _paginator_with_url(self, url, method="GET", body=None, headers={}):
+        def _paginator_with_url(self, url, method="GET", body=None, headers=None):
+            headers = headers or {}
             pages_read = 0
             while url and pages_read < self.max_pages:
                 api_responses, url = self._do_api_request(url, method, body, headers)
