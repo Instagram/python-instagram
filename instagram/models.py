@@ -56,10 +56,6 @@ class Media(ApiModel):
         for comment in entry['comments']['data']:
             new_media.comments.append(Comment.object_from_dictionary(comment))
 
-        new_media.caption = None
-        if entry['caption']:
-            new_media.caption = Caption.object_from_dictionary(entry['caption'])
-
         new_media.created_time = timestamp_to_datetime(entry['created_time'])
 
         if entry['location'] and entry.has_key('id'):
@@ -106,9 +102,6 @@ class Comment(ApiModel):
     def __unicode__(self):
         return "Comment: %s said \"%s\"" % (self.user.username, self.text)
 
-class Caption(Comment):
-    pass
-
 class Point(ApiModel):
     def __init__(self, latitude, longitude):
         self.latitude = latitude
@@ -153,5 +146,3 @@ class Relationship(ApiModel):
         self.incoming_status = incoming_status
         self.outgoing_status = outgoing_status
         self.target_user_is_private = target_user_is_private
-
-
