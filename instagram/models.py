@@ -8,12 +8,18 @@ class ApiModel(object):
         entry_str_dict = dict([(str(key), value) for key,value in entry.items()])
         return cls(**entry_str_dict)
 
+    def __repr__(self):
+        return unicode(self).encode('utf8')
+
 class Image(ApiModel):
 
     def __init__(self, url, width, height):
         self.url = url
         self.height = height
         self.width = width
+
+    def __unicode__(self):
+        return "Image: %s" % self.url
 
 class Media(ApiModel):
 
@@ -24,6 +30,9 @@ class Media(ApiModel):
 
     def get_standard_resolution_url(self):
         return self.images['standard_resolution'].url
+
+    def __unicode__(self):
+        return "Media: %s" % self.id
 
     @classmethod
     def object_from_dictionary(cls, entry):
@@ -78,8 +87,8 @@ class Tag(ApiModel):
         for key,value in kwargs.iteritems():
             setattr(self, key, value)
 
-    def __str__(self):
-        return "Tag %s" % self.name
+    def __unicode__(self):
+        return "Tag: %s" % self.name
 
 class Comment(ApiModel):
     def __init__(self, *args, **kwargs):
@@ -92,10 +101,10 @@ class Comment(ApiModel):
         text = entry['text']
         created_at = timestamp_to_datetime(entry['created_time'])
         id = entry['id']
-        return cls(id=id, user=user, text=text, created_at=created_at)
+        return Comment(id=id, user=user, text=text, created_at=created_at)
 
     def __unicode__(self):
-        return "%s said \"%s\"" % (self.user.username, self.message)
+        return "Comment: %s said \"%s\"" % (self.user.username, self.text)
 
 class Caption(Comment):
     pass
@@ -104,6 +113,9 @@ class Point(ApiModel):
     def __init__(self, latitude, longitude):
         self.latitude = latitude
         self.longitude = longitude
+
+    def __unicode__(self):
+        return "Point: (%s, %s)" % (self.latitude, self.longitude)
 
 class Location(ApiModel):
     def __init__(self, id, *args, **kwargs):
@@ -117,10 +129,13 @@ class Location(ApiModel):
         if 'latitude' in entry:
             point = Point(entry.get('latitude'),
                           entry.get('longitude'))
-        location = cls(entry.get('id', 0),
+        location = Location(entry.get('id', 0),
                        point=point,
                        name=entry.get('name', ''))
         return location
+
+    def __unicode__(self):
+        return "Location: %s (%s)" % (self.id, self.point)
 
 class User(ApiModel):
 
@@ -129,8 +144,8 @@ class User(ApiModel):
         for key,value in kwargs.iteritems():
             setattr(self, key, value)
 
-    def __str__(self):
-        return "User %s" % self.username
+    def __unicode__(self):
+        return "User: %s" % self.username
 
 class Relationship(ApiModel):
 
