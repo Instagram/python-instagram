@@ -4,9 +4,11 @@ import re
 import simplejson
 re_path_template = re.compile('{\w+}')
 
+
 def encode_string(value):
     return value.encode('utf-8') \
                         if isinstance(value, unicode) else str(value)
+
 
 class InstagramClientError(Exception):
     def __init__(self, error_message):
@@ -14,6 +16,7 @@ class InstagramClientError(Exception):
 
     def __str__(self):
         return self.error_message
+
 
 class InstagramAPIError(Exception):
 
@@ -24,6 +27,7 @@ class InstagramAPIError(Exception):
 
     def __str__(self):
         return "(%s) %s-%s" % (self.status_code, self.error_type, self.error_message)
+
 
 def bind_method(**config):
 
@@ -126,7 +130,7 @@ def bind_method(**config):
             url, method, body, headers = OAuth2Request(self.api).prepare_request(self.method,
                                                                                  self.path,
                                                                                  self.parameters,
-                                                                                 include_secret = self.include_secret)
+                                                                                 include_secret=self.include_secret)
             if self.as_generator:
                 return self._paginator_with_url(url, method, body, headers)
             else:
@@ -135,7 +139,6 @@ def bind_method(**config):
                 return content, next
             else:
                 return content
-
 
     def _call(api, *args, **kwargs):
         method = InstagramAPIMethod(api, *args, **kwargs)

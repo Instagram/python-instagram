@@ -1,15 +1,17 @@
 from helper import timestamp_to_datetime
 
+
 class ApiModel(object):
 
     @classmethod
     def object_from_dictionary(cls, entry):
         # make dict keys all strings
-        entry_str_dict = dict([(str(key), value) for key,value in entry.items()])
+        entry_str_dict = dict([(str(key), value) for key, value in entry.items()])
         return cls(**entry_str_dict)
 
     def __repr__(self):
         return unicode(self).encode('utf8')
+
 
 class Image(ApiModel):
 
@@ -21,11 +23,12 @@ class Image(ApiModel):
     def __unicode__(self):
         return "Image: %s" % self.url
 
+
 class Media(ApiModel):
 
     def __init__(self, id=None, **kwargs):
         self.id = id
-        for key,value in kwargs.iteritems():
+        for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
     def get_standard_resolution_url(self):
@@ -40,14 +43,14 @@ class Media(ApiModel):
 
         new_media.user = User.object_from_dictionary(entry['user'])
         new_media.images = {}
-        for version,version_info in entry['images'].iteritems():
+        for version, version_info in entry['images'].iteritems():
             new_media.images[version] = Image.object_from_dictionary(version_info)
 
         if 'user_has_liked' in entry:
             new_media.user_has_liked = entry['user_has_liked']
         new_media.like_count = entry['likes']['count']
         new_media.likes = []
-        if entry['likes'].has_key('data'):
+        if 'data' in entry['likes']:
             for like in entry['likes']['data']:
                 new_media.likes.append(User.object_from_dictionary(like))
 
@@ -58,7 +61,7 @@ class Media(ApiModel):
 
         new_media.created_time = timestamp_to_datetime(entry['created_time'])
 
-        if entry['location'] and entry.has_key('id'):
+        if entry['location'] and 'id' in entry:
             new_media.location = Location.object_from_dictionary(entry['location'])
 
         new_media.caption = None
@@ -77,18 +80,20 @@ class Media(ApiModel):
 
         return new_media
 
+
 class Tag(ApiModel):
     def __init__(self, name, **kwargs):
         self.name = name
-        for key,value in kwargs.iteritems():
+        for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
     def __unicode__(self):
         return "Tag: %s" % self.name
 
+
 class Comment(ApiModel):
     def __init__(self, *args, **kwargs):
-        for key,value in kwargs.iteritems():
+        for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
     @classmethod
@@ -102,6 +107,7 @@ class Comment(ApiModel):
     def __unicode__(self):
         return "Comment: %s said \"%s\"" % (self.user.username, self.text)
 
+
 class Point(ApiModel):
     def __init__(self, latitude, longitude):
         self.latitude = latitude
@@ -110,10 +116,11 @@ class Point(ApiModel):
     def __unicode__(self):
         return "Point: (%s, %s)" % (self.latitude, self.longitude)
 
+
 class Location(ApiModel):
     def __init__(self, id, *args, **kwargs):
         self.id = id
-        for key,value in kwargs.iteritems():
+        for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
     @classmethod
@@ -130,15 +137,17 @@ class Location(ApiModel):
     def __unicode__(self):
         return "Location: %s (%s)" % (self.id, self.point)
 
+
 class User(ApiModel):
 
     def __init__(self, id, *args, **kwargs):
         self.id = id
-        for key,value in kwargs.iteritems():
+        for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
     def __unicode__(self):
         return "User: %s" % self.username
+
 
 class Relationship(ApiModel):
 

@@ -2,14 +2,17 @@ import hmac
 import hashlib
 import simplejson
 
+
 class SubscriptionType:
     TAG = 'tag'
     USER = 'user'
     GEOGRAPHY = 'geography'
     LOCATION = 'location'
 
+
 class SubscriptionVerifyError(Exception):
     pass
+
 
 class SubscriptionsReactor(object):
 
@@ -41,9 +44,8 @@ class SubscriptionsReactor(object):
         callbacks.remove(callback)
 
     def _verify_signature(self, client_secret, raw_response, x_hub_signature):
-        digest = hmac.new(client_secret.encode('utf-8'), 
-                          msg=raw_response.encode('utf-8'), 
+        digest = hmac.new(client_secret.encode('utf-8'),
+                          msg=raw_response.encode('utf-8'),
                           digestmod=hashlib.sha1
                           ).hexdigest()
         return digest == x_hub_signature
-
