@@ -1,7 +1,18 @@
 import urllib
 from oauth2 import OAuth2Request
 import re
-import simplejson
+
+try:
+    import simplejson
+except ImportError:
+    try:
+        import json as simplejson
+    except ImportError:
+        try:
+            from django.utils import simplejson
+        except ImportError:
+            raise ImportError('A json library is required to use this python library. Lol, yay for being verbose. ;)')
+
 re_path_template = re.compile('{\w+}')
 
 
@@ -91,7 +102,12 @@ def bind_method(**config):
             response, content = OAuth2Request(self.api).make_request(url, method=method, body=body, headers=headers)
             if response['status'] == '503':
                 raise InstagramAPIError(response['status'], "Rate limited", "Your client is making too many request per second")
-            content_obj = simplejson.loads(content)
+
+            try:
+                content_obj = simplejson.loads(content)
+            except ValueError:
+                raise InstagramClientError('Unable to parse response, not valid JSON.')
+
             api_responses = []
             status_code = content_obj['meta']['code']
             if status_code == 200:

@@ -1,6 +1,16 @@
 import hmac
 import hashlib
-import simplejson
+
+try:
+    import simplejson
+except ImportError:
+    try:
+        import json as simplejson
+    except ImportError:
+        try:
+            from django.utils import simplejson
+        except ImportError:
+            raise ImportError('A json library is required to use this python library. Lol, yay for being verbose. ;)')
 
 
 class SubscriptionType:
@@ -10,7 +20,11 @@ class SubscriptionType:
     LOCATION = 'location'
 
 
-class SubscriptionVerifyError(Exception):
+class SubscriptionError(Exception):
+    pass
+
+
+class SubscriptionVerifyError(SubscriptionError):
     pass
 
 
@@ -28,7 +42,11 @@ class SubscriptionsReactor(object):
         if not self._verify_signature(client_secret, raw_response, x_hub_signature):
             raise SubscriptionVerifyError("X-Hub-Signature and hmac digest did not match")
 
-        response = simplejson.loads(raw_response)
+        try:
+            response = simplejson.loads(raw_response)
+        except ValueError:
+            raise SubscriptionError('Unable to parse response, not valid JSON.')
+
         for update in response:
             self._process_update(update)
 

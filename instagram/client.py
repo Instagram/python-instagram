@@ -174,6 +174,15 @@ class InstagramAPI(oauth2.OAuth2API):
                 requires_target_user=True,
                 response_type="entry")
 
+    user_relationship = bind_method(
+                method="GET",
+                path="/users/{user_id}/relationship",
+                root_class=Relationship,
+                accepts_parameters=["user_id"],
+                paginates=False,
+                requires_target_user=True,
+                response_type="entry")
+
     def _make_relationship_shortcut(action):
         def _inner(self, *args, **kwargs):
             return self.change_user_relationship(user_id=kwargs.get("user_id"),

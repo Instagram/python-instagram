@@ -154,3 +154,9 @@ class Relationship(ApiModel):
         self.incoming_status = incoming_status
         self.outgoing_status = outgoing_status
         self.target_user_is_private = target_user_is_private
+
+    def __unicode__(self):
+        follows = False if self.outgoing_status == 'none' else True
+        followed = False if self.incoming_status == 'none' else True
+
+        return "Relationship: (Follows: %s, Followed by: %s)" % (follows, followed)

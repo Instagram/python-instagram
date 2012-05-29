@@ -118,6 +118,7 @@ Relationships: http://instagr.am/developer/endpoints/relationships/
     api.unblock_user(user_id)
     api.approve_user_request(user_id)
     api.ignore_user_request(user_id)
+    api.user_relationship(user_id)
 
 
 Media: http://instagr.am/developer/endpoints/media/
