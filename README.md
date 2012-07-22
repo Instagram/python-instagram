@@ -41,7 +41,7 @@ Once you have an access token (whether via the script or from the user flow), yo
 
     access_token = "YOUR_ACCESS_TOKEN"
     api = InstagramAPI(access_token=access_token)
-    recent_media, next = instagram_client.user_recent_media(user_id=user.instagram_userid, count=count)
+    recent_media, next = api.user_recent_media(user_id=user.instagram_userid, count=count)
     for media in recent_media:
        print media.caption.text
        
