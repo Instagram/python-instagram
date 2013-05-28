@@ -92,17 +92,25 @@ def bind_method(**config):
             response, content = OAuth2Request(self.api).make_request(url, method=method, body=body, headers=headers)
             if response['status'] == '503':
                 raise InstagramAPIError(response['status'], "Rate limited", "Your client is making too many request per second")
-
             try:
                 content_obj = simplejson.loads(content)
             except ValueError:
                 raise InstagramClientError('Unable to parse response, not valid JSON.')
 
+            # Handle OAuthRateLimitExceeded from Instagram's Nginx which uses different format to documented api responses
+            if not content_obj.has_key('meta'):
+                if content_obj.get('code') == 420:
+                    error_message = content_obj.get('error_message') or "Your client is making too many request per second"
+                    raise InstagramAPIError(420, "Rate limited", error_message)
+                raise InstagramAPIError(content_obj.has_key('code'), content_obj.has_key('error_type'), content_obj.has_key('error_message'))
+            if response['status'] == '400':
+                raise InstagramAPIError(content_obj['meta'].get('code', '?'), content_obj['meta'].get('error_type', '?'), content_obj['meta'].get('error_message', '?'))
+
             api_responses = []
             status_code = content_obj['meta']['code']
             if status_code == 200:
                 if not self.objectify_response:
-                    return content_obj, None
+                    return content_obj, content_obj.get('pagination', {}).get('next_url')
 
                 if self.response_type == 'list':
                     for entry in content_obj['data']:
@@ -126,13 +134,18 @@ def bind_method(**config):
         def _paginator_with_url(self, url, method="GET", body=None, headers=None):
             headers = headers or {}
             pages_read = 0
-            while url and pages_read < self.max_pages:
+            while url:
+                if self.max_pages:
+                    if pages_read >= self.max_pages:
+                        break
                 api_responses, url = self._do_api_request(url, method, body, headers)
                 pages_read += 1
                 yield api_responses, url
             return
 
         def execute(self):
+            if not self.parameters:
+                self.parameters = {}
             url, method, body, headers = OAuth2Request(self.api).prepare_request(self.method,
                                                                                  self.path,
                                                                                  self.parameters,

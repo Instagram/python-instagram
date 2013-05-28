@@ -2,7 +2,7 @@ import oauth2
 from bind import bind_method
 from models import Media, User, Location, Tag, Comment, Relationship
 
-MEDIA_ACCEPT_PARAMETERS = ["count", "max_id"]
+MEDIA_ACCEPT_PARAMETERS = ["count", "max_id", "min_id", "max_tag_id"]
 SEARCH_ACCEPT_PARAMETERS = ["q", "count"]
 
 SUPPORTED_FORMATS = ['json']
@@ -57,7 +57,7 @@ class InstagramAPI(oauth2.OAuth2API):
                 path="/media/{media_id}/comments",
                 method="POST",
                 accepts_parameters=['media_id', 'text'],
-                response_type="empty",
+                response_type="entry",
                 root_class=Comment)
 
     delete_comment = bind_method(
@@ -79,21 +79,26 @@ class InstagramAPI(oauth2.OAuth2API):
                 response_type="entry",
                 root_class=Media)
 
+    # max_id 	Return media earlier than this max_id
+    # min_id 	Return media later than this min_id
     user_media_feed = bind_method(
                 path="/users/self/feed",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
                 root_class=Media,
                 paginates=True)
 
+    # max_like_id 	Return media liked before this id
     user_liked_media = bind_method(
                 path="/users/self/media/liked",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
                 root_class=Media,
                 paginates=True)
 
+    # max_id 	Return media earlier than this max_id
+    # min_id 	Return media later than this min_id
     user_recent_media = bind_method(
                 path="/users/{user_id}/media/recent",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['user_id'],
+                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['user_id', 'max_timestamp', 'min_timestamp'],
                 root_class=Media,
                 paginates=True)
 
@@ -102,12 +107,14 @@ class InstagramAPI(oauth2.OAuth2API):
                 accepts_parameters=SEARCH_ACCEPT_PARAMETERS,
                 root_class=User)
 
+    ## pagination not documented
     user_follows = bind_method(
                 path="/users/{user_id}/follows",
                 accepts_parameters=["user_id"],
                 paginates=True,
                 root_class=User)
 
+    ## pagination not documented
     user_followed_by = bind_method(
                 path="/users/{user_id}/followed-by",
                 accepts_parameters=["user_id"],
@@ -120,6 +127,10 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class=User,
                 response_type="entry")
 
+    # max_id 	Return media after this max_id
+    # min_id 	Return media before this min_id
+    # min_timestamp 	Return media after this UNIX timestamp
+    # max_timestamp 	Return media before this UNIX timestamp
     location_recent_media = bind_method(
                 path="/locations/{location_id}/media/recent",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['location_id'],
@@ -137,18 +148,22 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class=Location,
                 response_type="entry")
 
+    ## pagination not documented
     geography_recent_media = bind_method(
                 path="/geographies/{geography_id}/media/recent",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ["geography_id"],
                 root_class=Media,
                 paginates=True)
 
+    # max_id 	Return media after this max_id
+    # min_id 	Return media before this min_id
     tag_recent_media = bind_method(
                 path="/tags/{tag_name}/media/recent",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['tag_name'],
                 root_class=Media,
                 paginates=True)
 
+    ## pagination not documented
     tag_search = bind_method(
                 path="/tags/search",
                 accepts_parameters=SEARCH_ACCEPT_PARAMETERS,
@@ -165,6 +180,7 @@ class InstagramAPI(oauth2.OAuth2API):
                 path="/users/self/requested-by",
                 root_class=User)
 
+    ## pagination not documented
     change_user_relationship = bind_method(
                 method="POST",
                 path="/users/{user_id}/relationship",

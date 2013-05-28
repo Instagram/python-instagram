@@ -7,10 +7,14 @@ class ApiModel(object):
     def object_from_dictionary(cls, entry):
         # make dict keys all strings
         entry_str_dict = dict([(str(key), value) for key, value in entry.items()])
-        return cls(**entry_str_dict)
+        model = cls(**entry_str_dict)
+        model._dict = entry_str_dict
+        return model
 
     def __repr__(self):
-        return unicode(self).encode('utf8')
+        return '<%s: %r>' % (
+            str(self.__class__).split('.')[-1],
+            dict([(k, v) for k, v in vars(self).items() if not k.startswith('_')]))
 
 
 class Image(ApiModel):
@@ -40,6 +44,7 @@ class Media(ApiModel):
     @classmethod
     def object_from_dictionary(cls, entry):
         new_media = Media(id=entry['id'])
+        new_media._dict = entry
 
         new_media.user = User.object_from_dictionary(entry['user'])
         new_media.images = {}
@@ -68,8 +73,8 @@ class Media(ApiModel):
         if entry['caption']:
             new_media.caption = Comment.object_from_dictionary(entry['caption'])
 
+        new_media.tags = []
         if entry['tags']:
-            new_media.tags = []
             for tag in entry['tags']:
                 new_media.tags.append(Tag.object_from_dictionary({'name': tag}))
 
@@ -97,7 +102,10 @@ class Comment(ApiModel):
 
     @classmethod
     def object_from_dictionary(cls, entry):
-        user = User.object_from_dictionary(entry['from'])
+        user = None
+        if entry['from']:
+            user = User.object_from_dictionary(entry['from'])
+            user._dict = entry
         text = entry['text']
         created_at = timestamp_to_datetime(entry['created_time'])
         id = entry['id']
@@ -128,9 +136,10 @@ class Location(ApiModel):
         if 'latitude' in entry:
             point = Point(entry.get('latitude'),
                           entry.get('longitude'))
-        location = Location(entry.get('id', 0),
+        location = cls(entry.get('id'),
                        point=point,
-                       name=entry.get('name', ''))
+                       name=entry.get('name'))
+        location._dict = entry
         return location
 
     def __unicode__(self):

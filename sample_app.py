@@ -32,7 +32,7 @@ def on_callback():
     if not code:
         return 'Missing code'
     try:
-        access_token = unauthenticated_api.exchange_code_for_access_token(code)
+        access_token, user_info = unauthenticated_api.exchange_code_for_access_token(code)
         if not access_token:
             return 'Could not get access token'
         

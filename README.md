@@ -22,7 +22,7 @@ Authentication
 -----
 
 Instagram API uses the OAuth2 protocol for authentication, but not all functionality requires authentication.
-See the docs for more information: http://instagr.am/developer/auth/
+See the docs for more information: http://instagr.am/developer/authentication/
 
 ### Obtaining an access token
 
