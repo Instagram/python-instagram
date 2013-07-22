@@ -1,4 +1,4 @@
-import simplejson
+from json_import import simplejson
 import urllib
 from httplib2 import Http
 import mimetypes
