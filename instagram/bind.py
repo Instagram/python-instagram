@@ -100,6 +100,7 @@ def bind_method(**config):
 
             api_responses = []
             status_code = content_obj['meta']['code']
+            remaining_api_calls = response['x-ratelimit-remaining']
             if status_code == 200:
                 if not self.objectify_response:
                     return content_obj, None
@@ -119,7 +120,7 @@ def bind_method(**config):
                         api_responses = self.root_class.object_from_dictionary(data)
                 elif self.response_type == 'empty':
                     pass
-                return api_responses, content_obj.get('pagination', {}).get('next_url')
+                return api_responses, content_obj.get('pagination', {}).get('next_url'), remaining_api_calls
             else:
                 raise InstagramAPIError(status_code, content_obj['meta']['error_type'], content_obj['meta']['error_message'])
 
@@ -140,9 +141,9 @@ def bind_method(**config):
             if self.as_generator:
                 return self._paginator_with_url(url, method, body, headers)
             else:
-                content, next = self._do_api_request(url, method, body, headers)
+                content, next, remaining_api_calls = self._do_api_request(url, method, body, headers)
             if self.paginates:
-                return content, next
+                return content, next, remaining_api_calls
             else:
                 return content
 
