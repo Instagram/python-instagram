@@ -47,6 +47,10 @@ def bind_method(**config):
         def __init__(self, api, *args, **kwargs):
             self.api = api
             self.as_generator = kwargs.pop("as_generator", False)
+            if self.as_generator:
+                self.pagination_format = 'next_url'
+            else:
+                self.pagination_format = kwargs.pop('pagination_format', 'next_url')
             self.return_json = kwargs.pop("return_json", False)
             self.max_pages = kwargs.pop("max_pages", 3)
             self.parameters = {}
@@ -87,6 +91,15 @@ def bind_method(**config):
                 self.path = self.path.replace(variable, value)
             self.path = self.path + '.%s' % self.api.format
 
+        def _build_pagination_info(self, content_obj):
+            """Extract pagination information in the desired format."""
+            pagination = content_obj.get('pagination', {})
+            if self.pagination_format == 'next_url':
+                return pagination.get('next_url')
+            if self.pagination_format == 'dict':
+                return pagination
+            raise Exception('Invalid value for pagination_format: %s' % self.pagination_format)
+
         def _do_api_request(self, url, method="GET", body=None, headers=None):
             headers = headers or {}
             response, content = OAuth2Request(self.api).make_request(url, method=method, body=body, headers=headers)
@@ -119,7 +132,7 @@ def bind_method(**config):
                         api_responses = self.root_class.object_from_dictionary(data)
                 elif self.response_type == 'empty':
                     pass
-                return api_responses, content_obj.get('pagination', {}).get('next_url')
+                return api_responses, self._build_pagination_info(content_obj)
             else:
                 raise InstagramAPIError(status_code, content_obj['meta']['error_type'], content_obj['meta']['error_message'])
 
