@@ -150,7 +150,7 @@ Locations: http://instagr.am/developer/endpoints/locations/
 
     api.location(location_id)
     api.location_recent_media(count, max_id, location_id)*
-    api.location_search(q, count, lat, lng, foursquare_id)
+    api.location_search(q, count, lat, lng, foursquare_id, foursquare_v2_id)
     
 Geographies: http://instagr.am/developer/endpoints/geographies/
 
