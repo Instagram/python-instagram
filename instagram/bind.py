@@ -49,6 +49,7 @@ def bind_method(**config):
             self.as_generator = kwargs.pop("as_generator", False)
             self.return_json = kwargs.pop("return_json", False)
             self.max_pages = kwargs.pop("max_pages", 3)
+            self.with_next_url = kwargs.pop("with_next_url", None)
             self.parameters = {}
             self._build_parameters(args, kwargs)
             self._build_path()
@@ -132,11 +133,18 @@ def bind_method(**config):
                 yield api_responses, url
             return
 
+        def _get_with_next_url(self, url, method="GET", body=None, headers=None):
+            headers = headers or {}
+            content, next = self._do_api_request(url, method, body, headers)
+            return content, next
+
         def execute(self):
             url, method, body, headers = OAuth2Request(self.api).prepare_request(self.method,
                                                                                  self.path,
                                                                                  self.parameters,
                                                                                  include_secret=self.include_secret)
+            if self.with_next_url:
+                return self._get_with_next_url(self.with_next_url, method, body, headers)
             if self.as_generator:
                 return self._paginator_with_url(url, method, body, headers)
             else:
