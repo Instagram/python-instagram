@@ -2,7 +2,7 @@
 
 import types
 import sys
-import simplejson
+from instagram.json_import import simplejson
 import time
 import getpass
 import unittest

@@ -116,6 +116,18 @@
             "username": "mikeyk", 
             "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_4_75sq_1292324747_debug.jpg", 
             "id": "4"
-        }
+        },
+        "users_in_photo": [{
+            "user": {
+                "username": "kevin",
+                "full_name": "Kevin S",
+                "id": "3",
+                "profile_picture": "..."
+            },
+            "position": {
+                "x": 0.315,
+                "y": 0.9111
+            }
+        }]
     }
 }

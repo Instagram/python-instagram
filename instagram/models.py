@@ -24,6 +24,12 @@ class Image(ApiModel):
         return "Image: %s" % self.url
 
 
+class Video(Image):
+
+    def __unicode__(self):
+        return "Video: %s" % self.url
+
+
 class Media(ApiModel):
 
     def __init__(self, id=None, **kwargs):
@@ -45,6 +51,11 @@ class Media(ApiModel):
         new_media.images = {}
         for version, version_info in entry['images'].iteritems():
             new_media.images[version] = Image.object_from_dictionary(version_info)
+
+        if 'videos' in entry:
+            new_media.videos = {}
+            for version, version_info in entry['videos'].iteritems():
+                new_media.videos[version] = Video.object_from_dictionary(version_info)
 
         if 'user_has_liked' in entry:
             new_media.user_has_liked = entry['user_has_liked']
@@ -73,6 +84,13 @@ class Media(ApiModel):
             for tag in entry['tags']:
                 new_media.tags.append(Tag.object_from_dictionary({'name': tag}))
 
+        if entry.get('users_in_photo'):
+            new_media.users_in_photo = []
+            for user in entry['users_in_photo']:
+                new_media.users_in_photo.append(UserInPhoto(
+                        User.object_from_dictionary(user['user']),
+                        Position.object_from_dictionary(user['position'])))
+
         new_media.link = entry['link']
 
         new_media.filter = entry.get('filter')
@@ -88,6 +106,25 @@ class Tag(ApiModel):
 
     def __unicode__(self):
         return "Tag: %s" % self.name
+
+
+class UserInPhoto(ApiModel):
+    def __init__(self, user, position):
+        self.user = user
+        self.position = position
+
+    def __unicode__(self):
+        return "UserInPhoto: %s" % self.name
+
+
+class Position(ApiModel):
+    def __init__(self, **kwargs):
+        self.name = name
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
+
+    def __unicode__(self):
+        return "Position: %s" % self.name
 
 
 class Comment(ApiModel):
