@@ -89,7 +89,8 @@ class InstagramAPI(oauth2.OAuth2API):
                 path="/users/self/media/liked",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
                 root_class=Media,
-                paginates=True)
+                paginates=True,
+                pagination_key='max_like_id')
 
     user_recent_media = bind_method(
                 path="/users/{user_id}/media/recent",
@@ -106,12 +107,14 @@ class InstagramAPI(oauth2.OAuth2API):
                 path="/users/{user_id}/follows",
                 accepts_parameters=["user_id"],
                 paginates=True,
+                pagination_key='cursor',
                 root_class=User)
 
     user_followed_by = bind_method(
                 path="/users/{user_id}/followed-by",
                 accepts_parameters=["user_id"],
                 paginates=True,
+                pagination_key='cursor',
                 root_class=User)
 
     user = bind_method(
@@ -147,7 +150,8 @@ class InstagramAPI(oauth2.OAuth2API):
                 path="/tags/{tag_name}/media/recent",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['tag_name'],
                 root_class=Media,
-                paginates=True)
+                paginates=True,
+                pagination_key="max_tag_id")
 
     tag_search = bind_method(
                 path="/tags/search",
