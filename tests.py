@@ -1,9 +1,10 @@
-#! /usr/bin/python
+#!/usr/bin/env python
 
 import types
-import sys
-import simplejson
-import time
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import getpass
 import unittest
 import urlparse
@@ -42,7 +43,7 @@ class MockHttp(object):
 
         fl = open('fixtures/%s.json' % fn_name)
         content = fl.read()
-        json_content = simplejson.loads(content)
+        json_content = json.loads(content)
         status = json_content['meta']['code']
         return {
             'status': status
@@ -125,7 +126,45 @@ class InstagramAPITests(unittest.TestCase):
         self.api.user_liked_media(count=10)
 
     def test_user_recent_media(self):
-        self.api.user_recent_media(count=10)
+        media, url = self.api.user_recent_media(count=10)
+
+        self.assertTrue( all( [hasattr(obj, 'type') for obj in media] ) )
+
+        image = media[0]
+        self.assertEquals(
+                image.get_standard_resolution_url(),
+                "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_7.jpg")
+
+        self.assertEquals(
+                image.get_low_resolution_url(),
+                "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_6.jpg")
+
+        self.assertEquals(
+                image.get_thumbnail_url(),
+                "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_5.jpg")
+
+        self.assertEquals( False, hasattr(image, 'videos') )
+
+        video = media[1]
+        self.assertEquals(
+                video.get_standard_resolution_url(),
+                video.videos['standard_resolution'].url)
+
+        self.assertEquals(
+                video.get_standard_resolution_url(),
+                "http://distilleryvesper9-13.ak.instagram.com/090d06dad9cd11e2aa0912313817975d_101.mp4")
+
+        self.assertEquals(
+                video.get_low_resolution_url(),
+                "http://distilleryvesper9-13.ak.instagram.com/090d06dad9cd11e2aa0912313817975d_102.mp4")
+
+        self.assertEquals(
+                video.get_thumbnail_url(),
+                "http://distilleryimage2.ak.instagram.com/11f75f1cd9cc11e2a0fd22000aa8039a_5.jpg")
+
+
+
+
 
     def test_user_search(self):
         self.api.user_search('mikeyk', 10)
