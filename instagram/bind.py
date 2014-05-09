@@ -12,11 +12,15 @@ def encode_string(value):
 
 
 class InstagramClientError(Exception):
-    def __init__(self, error_message):
+    def __init__(self, error_message, status_code=None):
+        self.status_code = status_code
         self.error_message = error_message
 
     def __str__(self):
-        return self.error_message
+        if self.status_code:
+            return "(%s) %s" % (self.status_code, self.error_message)
+        else:
+            return self.error_message
 
 
 class InstagramAPIError(Exception):
@@ -97,7 +101,7 @@ def bind_method(**config):
             try:
                 content_obj = simplejson.loads(content)
             except ValueError:
-                raise InstagramClientError('Unable to parse response, not valid JSON.')
+                raise InstagramClientError('Unable to parse response, not valid JSON.', status_code=response['status'])
 
             # Handle OAuthRateLimitExceeded from Instagram's Nginx which uses different format to documented api responses
             if not content_obj.has_key('meta'):
