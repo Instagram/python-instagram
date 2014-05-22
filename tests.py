@@ -7,7 +7,7 @@ except ImportError:
     import json
 import getpass
 import unittest
-import urlparse
+import urllib.parse
 from instagram import client, oauth2, InstagramAPIError
 
 TEST_AUTH = False
@@ -26,8 +26,8 @@ class MockHttp(object):
             'status':'400'
         }, "{}"
 
-        parsed = urlparse.urlparse(url)
-        options = urlparse.parse_qs(parsed.query)
+        parsed = urllib.parse.urlparse(url)
+        options = urllib.parse.parse_qs(parsed.query)
 
         fn_name = str(active_call)
         if fn_name == 'get_authorize_login_url':
@@ -67,8 +67,8 @@ class InstagramAuthTests(unittest.TestCase):
     def test_authorize_login_url(self):
         redirect_uri = self.unauthenticated_api.get_authorize_login_url()
         assert redirect_uri
-        print "Please visit and authorize at:\n%s" % redirect_uri
-        code = raw_input("Paste received code (blank to skip): ").strip()
+        print("Please visit and authorize at:\n%s" % redirect_uri)
+        code = input("Paste received code (blank to skip): ").strip()
         if not code:
             return
 
@@ -78,7 +78,7 @@ class InstagramAuthTests(unittest.TestCase):
     def test_xauth_exchange(self):
         """ Your client ID must be authorized for xAuth access; email
             xauth@instagram.com for access"""
-        username = raw_input("Enter username for XAuth (blank to skip): ").strip()
+        username = input("Enter username for XAuth (blank to skip): ").strip()
         if not username:
             return
         password =  getpass.getpass("Enter password for XAuth (blank to skip): ").strip()

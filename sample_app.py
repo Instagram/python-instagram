@@ -18,7 +18,7 @@ CONFIG = {
 unauthenticated_api = client.InstagramAPI(**CONFIG)
 
 def process_tag_update(update):
-    print update
+    print(update)
 
 reactor = subscriptions.SubscriptionsReactor()
 reactor.register_callback(subscriptions.SubscriptionType.TAG, process_tag_update)
@@ -28,8 +28,8 @@ def home():
     try:
         url = unauthenticated_api.get_authorize_url(scope=["likes","comments"])
         return '<a href="%s">Connect with Instagram</a>' % url
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
 
 def get_nav(): 
     nav_menu = ("<h1>Python Instagram</h1>"
@@ -53,13 +53,13 @@ def on_callback(session):
         return 'Missing code'
     try:
         access_token, user_info = unauthenticated_api.exchange_code_for_access_token(code)
-        print "access token= " + access_token
+        print("access token= " + access_token)
         if not access_token:
             return 'Could not get access token'
         api = client.InstagramAPI(access_token=access_token)
         session['access_token']=access_token
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
     return get_nav()
 
 @route('/recent')
@@ -78,8 +78,8 @@ def on_recent(session):
             else:
                 photos.append('<img src="%s"/>' % (media.get_low_resolution_url()))
         content += ''.join(photos)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/user_media_feed')
@@ -101,8 +101,8 @@ def on_user_media_feed(session):
                 photos.append('<img src="%s"/>' % media.get_standard_resolution_url())
             counter += 1
         content += ''.join(photos)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/location_recent_media')
@@ -118,8 +118,8 @@ def location_recent_media(session):
         for media in recent_media:
             photos.append('<img src="%s"/>' % media.get_standard_resolution_url())
         content += ''.join(photos)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/media_search')
@@ -135,8 +135,8 @@ def media_search(session):
         for media in media_search:
             photos.append('<img src="%s"/>' % media.get_standard_resolution_url())
         content += ''.join(photos)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/media_popular')
@@ -152,8 +152,8 @@ def media_popular(session):
         for media in media_search:
             photos.append('<img src="%s"/>' % media.get_standard_resolution_url())
         content += ''.join(photos)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/user_search')
@@ -169,8 +169,8 @@ def user_search(session):
         for user in user_search:
             users.append('<li><img src="%s">%s</li>' % (user.profile_picture,user.username))
         content += ''.join(users)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/location_search')
@@ -186,8 +186,8 @@ def location_search(session):
         for location in location_search:
             locations.append('<li>%s  <a href="https://www.google.com/maps/preview/@%s,%s,19z">Map</a>  </li>' % (location.name,location.point.latitude,location.point.longitude))
         content += ''.join(locations)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/tag_search')
@@ -204,8 +204,8 @@ def tag_search(session):
         for tag_media in tag_recent_media:
             photos.append('<img src="%s"/>' % tag_media.get_standard_resolution_url())
         content += ''.join(photos)
-    except Exception, e:
-        print e              
+    except Exception as e:
+        print(e)              
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/realtime_callback')
@@ -222,6 +222,6 @@ def on_realtime_callback():
         try:
             reactor.process(CONFIG['client_secret'], raw_response, x_hub_signature)
         except subscriptions.SubscriptionVerifyError:
-            print "Signature mismatch"
+            print("Signature mismatch")
 
 run(host='localhost', port=8515, reloader=True)
