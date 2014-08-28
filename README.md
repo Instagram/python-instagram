@@ -1,3 +1,5 @@
+[![Build Status](https://api.shippable.com/projects/53fecae4a8f6f5cd0759b44b/badge/master)](https://www.shippable.com/projects/53fecae4a8f6f5cd0759b44b)
+
 python-instagram
 ======
 A Python client for the Instagram REST and Search APIs
