@@ -1,3 +1,4 @@
+build_environment: ubuntu1204
 language: python
 python:
   - "2.7"

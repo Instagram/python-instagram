@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/cmlh/python-instagram.svg)](https://travis-ci.org/cmlh/python-instagram)
-
 python-instagram
 ======
 A Python client for the Instagram REST and Search APIs
