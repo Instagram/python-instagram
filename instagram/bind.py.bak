@@ -1,7 +1,7 @@
-import urllib.request, urllib.parse, urllib.error
-from .oauth2 import OAuth2Request
+import urllib
+from oauth2 import OAuth2Request
 import re
-from .json_import import simplejson
+from json_import import simplejson
 import hmac
 from hashlib import sha256
 
@@ -10,7 +10,7 @@ re_path_template = re.compile('{\w+}')
 
 def encode_string(value):
     return value.encode('utf-8') \
-                        if isinstance(value, str) else str(value)
+                        if isinstance(value, unicode) else str(value)
 
 
 class InstagramClientError(Exception):
@@ -76,7 +76,7 @@ def bind_method(**config):
                 except IndexError:
                     raise InstagramClientError("Too many arguments supplied")
 
-            for key, value in kwargs.items():
+            for key, value in kwargs.iteritems():
                 if value is None:
                     continue
                 if key in self.parameters:
@@ -91,7 +91,7 @@ def bind_method(**config):
                 name = variable.strip('{}')
 
                 try:
-                    value = urllib.parse.quote(self.parameters[name])
+                    value = urllib.quote(self.parameters[name])
                 except KeyError:
                     raise Exception('No parameter value found for path variable: %s' % name)
                 del self.parameters[name]
@@ -130,7 +130,7 @@ def bind_method(**config):
                 raise InstagramClientError('Unable to parse response, not valid JSON.', status_code=response['status'])
 
             # Handle OAuthRateLimitExceeded from Instagram's Nginx which uses different format to documented api responses
-            if 'meta' not in content_obj:
+            if not content_obj.has_key('meta'):
                 if content_obj.get('code') == 420 or content_obj.get('code') == 429:
                     error_message = content_obj.get('error_message') or "Your client is making too many request per second"
                     raise InstagramAPIError(content_obj.get('code'), "Rate limited", error_message)

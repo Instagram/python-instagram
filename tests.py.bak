@@ -67,7 +67,7 @@ class InstagramAuthTests(unittest.TestCase):
     def test_authorize_login_url(self):
         redirect_uri = self.unauthenticated_api.get_authorize_login_url()
         assert redirect_uri
-        print(("Please visit and authorize at:\n%s" % redirect_uri))
+        print("Please visit and authorize at:\n%s" % redirect_uri)
         code = input("Paste received code (blank to skip): ").strip()
         if not code:
             return

@@ -54,7 +54,7 @@ def on_callback(session):
         return 'Missing code'
     try:
         access_token, user_info = unauthenticated_api.exchange_code_for_access_token(code)
-        print(("access token= " + access_token))
+        print("access token= " + access_token)
         if not access_token:
             return 'Could not get access token'
         api = client.InstagramAPI(access_token=access_token)
