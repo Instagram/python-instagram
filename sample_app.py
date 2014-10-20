@@ -1,21 +1,26 @@
+import redis
 import bottle_session
 import bottle
 from bottle import route, redirect, post, run, request
 from instagram import client, subscriptions
+from os import getenv
+from sys import argv
+import urlparse
 
 bottle.debug(True)
 
 app = bottle.app()
-plugin = bottle_session.SessionPlugin(cookie_lifetime=600)
-app.install(plugin)
+redis_url = urlparse.urlparse(getenv('REDISCLOUD_URL'))
+redis_connection_pool = redis.ConnectionPool(host=redis_url.hostname, port=redis_url.port, password=redis_url.password)
+session_plugin = bottle_session.SessionPlugin()
+session_plugin.connection_pool = redis_connection_pool
+app.install(session_plugin)
 
-CONFIG = {
-    'client_id': '<client_id>',
-    'client_secret': '<client_secret>',
-    'redirect_uri': 'http://localhost:8515/oauth_callback'
-}
+client_id = getenv('CLIENT_ID')
+client_secret = getenv('CLIENT_SECRET')
+redirect_uri = getenv('REDIRECT_URI')
 
-unauthenticated_api = client.InstagramAPI(**CONFIG)
+unauthenticated_api = client.InstagramAPI(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri)
 
 def process_tag_update(update):
     print update
@@ -264,4 +269,4 @@ def on_realtime_callback():
         except subscriptions.SubscriptionVerifyError:
             print "Signature mismatch"
 
-run(host='localhost', port=8515, reloader=True)
+run(host='0.0.0.0', port=argv[1], reloader=True)

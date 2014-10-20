@@ -195,16 +195,26 @@ api.geography_recent_media(count, max_id, geography_id)*
 Sample app
 ------
 This repository includes a one-file sample app that uses the bottle framework and demonstrates
-authentication, subscriptions, and update processing. To try it out:
+authentication, subscriptions, and update processing. To try it out at https://python-instagram.herokuapp.com/
 
-  * Download bottle if you don't already have it: pip install bottle
-  * Download bottle-session if you don't already have it: pip install bottle-session
-  * Download and run a redis instance on port 6379 if you don't already have it. Check http://redis.io for instructions.
-  * Set your redirect URI to 'http://localhost:8515/oauth_callback' in your dev profile
-  * Open up sample\_app.py, update it with your client\_id and secret, and set redirect URI to 'http://localhost:8515/oauth_callback'
-  * Run the file; it will host a local server on port 8515.
-  * Try visiting http://localhost:8515 in your browser
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
+Install the dependenices:
+```
+pip install bottle
+pip install bottle-session
+```
+Replace the exported values of Environment Variables for http://redislabs.com/ and http://instagram.com/developer/clients/manage/ below:
+``` 
+export REDISCLOUD_URI=redis://rediscloud:password@host:port
+export CLIENT_ID=client_id
+export CLIENT_SECRET=client_secret
+export REDIRECT_URI=redirect_uri 
+```
+Execute the sample application:
+```
+python sample_app.py
+```
 Contributing
 ------------
 In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.

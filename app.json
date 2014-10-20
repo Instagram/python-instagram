@@ -1,0 +1,11 @@
+{
+  "name": "Python Instagram",
+  "description": "Python Instagram Sample App",
+  "keywords": [
+    "python",
+    "instagram"
+  ],
+  "repository": "https://github.com/Instagram/python-instagram/",
+  "logo": "https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xpa1/t39.2365-6/851582_417171855069447_55288290_n.png",
+  "addons": [ "rediscloud:25" ]
+}
