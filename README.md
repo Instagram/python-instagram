@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/cmlh/python-instagram/status.png)](https://drone.io/github.com/cmlh/python-instagram/latest)
+
 python-instagram
 ======
 A Python client for the Instagram REST and Search APIs
