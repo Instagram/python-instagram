@@ -1,3 +1,5 @@
+[ ![Codeship Status for cmlh/python-instagram](https://codeship.io/projects/fa368020-0fed-0132-3a96-42e120fa204e/status)](https://codeship.io/projects/32745)
+
 python-instagram
 ======
 A Python client for the Instagram REST and Search APIs
