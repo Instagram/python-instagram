@@ -99,6 +99,12 @@ class Media(ApiModel):
         for comment in entry['comments']['data']:
             new_media.comments.append(Comment.object_from_dictionary(comment))
 
+        new_media.users_in_photo = []
+
+        if entry.get('users_in_photo'):
+            for user_in_photo in entry['users_in_photo']:
+                new_media.users_in_photo.append(UserInPhoto.object_from_dictionary(user_in_photo))
+
         new_media.created_time = timestamp_to_datetime(entry['created_time'])
 
         if entry['location'] and 'id' in entry:
@@ -208,3 +214,37 @@ class Relationship(ApiModel):
         followed = False if self.incoming_status == 'none' else True
 
         return "Relationship: (Follows: %s, Followed by: %s)" % (follows, followed)
+
+
+class Position(ApiModel):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __unicode__(self):
+        return "Position: (%s, %s)" % (self.x, self.y)
+
+    @classmethod
+    def object_from_dictionary(cls, entry):
+        if 'x' in entry:
+            return Position(entry['x'], entry['y'])
+
+
+class UserInPhoto(ApiModel):
+    def __init__(self, user, position):
+        self.position = position
+        self.user = user
+
+    def __unicode__(self):
+        return "UserInPhoto: (%s, %s)" % (self.user, self.position)
+
+    @classmethod
+    def object_from_dictionary(cls, entry):
+        user = None
+        if 'user' in entry:
+            user = User.object_from_dictionary(entry['user'])
+
+        if 'position' in entry:
+            position = Position(entry['position']['x'], entry['position']['y'])
+
+        return UserInPhoto(user, position)
