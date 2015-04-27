@@ -108,7 +108,7 @@ class Media(ApiModel):
         if entry['caption']:
             new_media.caption = Comment.object_from_dictionary(entry['caption'])
 
-        if entry['tags']:
+        if 'tags' in entry:
             new_media.tags = []
             for tag in entry['tags']:
                 new_media.tags.append(Tag.object_from_dictionary({'name': tag}))
@@ -116,6 +116,13 @@ class Media(ApiModel):
         new_media.link = entry['link']
 
         new_media.filter = entry.get('filter')
+
+        if 'users_in_photo' in entry and entry['users_in_photo']!= None:
+            users = []
+            new_media.user_data_in_photo = entry['users_in_photo']
+            for user in entry['users_in_photo']:
+                users.append(user['user']['username'])
+            new_media.users_in_photo = users
 
         return new_media
 
