@@ -246,6 +246,9 @@ class InstagramAPITests(unittest.TestCase):
     def test_geography_recent_media(self):
         self.api.geography_recent_media(geography_id=1)
 
+    def test_users_in_photo(self):
+        self.api.media(media_id=4)
+        
 if __name__ == '__main__':
     if not TEST_AUTH:
         del InstagramAuthTests
