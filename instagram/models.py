@@ -108,8 +108,8 @@ class Media(ApiModel):
         if entry['caption']:
             new_media.caption = Comment.object_from_dictionary(entry['caption'])
 
-        if 'tags' in entry:
-            new_media.tags = []
+        new_media.tags = []
+        if entry['tags']:
             for tag in entry['tags']:
                 new_media.tags.append(Tag.object_from_dictionary({'name': tag}))
 

@@ -124,7 +124,7 @@ class OAuth2Request(object):
         sig = endpoint
         for key in sorted(params.keys()):
             sig += '|%s=%s' % (key, params[key])
-        return  hmac.new(secret, sig, sha256).hexdigest()
+        return hmac.new(secret, sig, sha256).hexdigest()
 
     def url_for_get(self, path, parameters):
         return self._full_url_with_params(path, parameters)
@@ -162,7 +162,7 @@ class OAuth2Request(object):
             return base
 
     def _signed_request(self, path, params, include_signed_request, include_secret):
-        if include_signed_request:
+        if include_signed_request and self.api.client_secret is not None:
             if self.api.access_token:
                 params['access_token'] = self.api.access_token
             elif self.api.client_id:
@@ -176,7 +176,7 @@ class OAuth2Request(object):
     def _post_body(self, params):
         return urlencode(params)
 
-    def _encode_multipart(params, files):
+    def _encode_multipart(self, params, files):
         boundary = "MuL7Ip4rt80uND4rYF0o"
 
         def get_content_type(file_name):
