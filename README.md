@@ -188,7 +188,7 @@ Locations: http://instagr.am/developer/endpoints/locations/
 ``` python
 api.location(location_id)
 api.location_recent_media(count, max_id, location_id)*
-api.location_search(q, count, lat, lng, foursquare_id, foursquare_v2_id)
+api.location_search(q, count, lat, lng, foursquare_id, foursquare_v2_id, facebook_places_id)
 ```
     
 Geographies: http://instagr.am/developer/endpoints/geographies/
