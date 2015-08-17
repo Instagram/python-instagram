@@ -2,6 +2,7 @@
 
 import types
 import six
+import pytz
 try:
     import simplejson as json
 except ImportError:
@@ -10,6 +11,7 @@ import getpass
 import unittest
 from six.moves.urllib.parse import urlparse, parse_qs
 from instagram import client, oauth2, InstagramAPIError
+from instagram.helper import timestamp_to_datetime
 
 TEST_AUTH = False
 client_id = "DEBUG"
@@ -245,6 +247,17 @@ class InstagramAPITests(unittest.TestCase):
 
     def test_geography_recent_media(self):
         self.api.geography_recent_media(geography_id=1)
+
+
+class InstagramHelperTests(unittest.TestCase):
+    def setUp(self):
+        self.timestamp = 1439822186
+
+    def test_timestamp_to_datetime(self):
+        date_time = timestamp_to_datetime(float(self.timestamp))
+        self.assertIsNotNone(date_time.tzinfo)
+        self.assertEqual(date_time.tzinfo, pytz.UTC)
+
 
 if __name__ == '__main__':
     if not TEST_AUTH:
