@@ -5,3 +5,4 @@ redis==2.10.3
 simplejson==3.6.3
 beaker==1.6.4
 six==1.8.0
+pytz==2015.4
