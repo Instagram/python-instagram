@@ -27,12 +27,13 @@ class OAuth2API(object):
     # override with 'Instagram', etc
     api_name = "Generic API"
 
-    def __init__(self, client_id=None, client_secret=None, client_ips=None, access_token=None, redirect_uri=None):
+    def __init__(self, client_id=None, client_secret=None, client_ips=None, access_token=None, redirect_uri=None, timeout=None):
         self.client_id = client_id
         self.client_secret = client_secret
         self.client_ips = client_ips
         self.access_token = access_token
         self.redirect_uri = redirect_uri
+        self.timeout = timeout
 
     def get_authorize_url(self, scope=None):
         req = OAuth2AuthExchangeRequest(self)
@@ -96,7 +97,7 @@ class OAuth2AuthExchangeRequest(object):
         return self._url_for_authorize(scope=scope)
 
     def get_authorize_login_url(self, scope=None):
-        http_object = Http(disable_ssl_certificate_validation=True)
+        http_object = Http(timeout=self.api.timeout, disable_ssl_certificate_validation=True)
 
         url = self._url_for_authorize(scope=scope)
         response, content = http_object.request(url)
@@ -107,7 +108,7 @@ class OAuth2AuthExchangeRequest(object):
 
     def exchange_for_access_token(self, code=None, username=None, password=None, scope=None, user_id=None):
         data = self._data_for_exchange(code, username, password, scope=scope, user_id=user_id)
-        http_object = Http(disable_ssl_certificate_validation=True)
+        http_object = Http(timeout=self.api.timeout, disable_ssl_certificate_validation=True)
         url = self.api.access_token_url
         response, content = http_object.request(url, method="POST", body=data)
         parsed_content = simplejson.loads(content.decode())
@@ -237,5 +238,8 @@ class OAuth2Request(object):
             headers.update({"User-Agent": "%s Python Client" % self.api.api_name})
         # https://github.com/jcgregorio/httplib2/issues/173
         # bug in httplib2 w/ Python 3 and disable_ssl_certificate_validation=True
-        http_obj = Http() if six.PY3 else Http(disable_ssl_certificate_validation=True)        
+        if six.PY3:
+            http_obj = Http(timeout=self.api.timeout) 
+        else:
+            http_obj = Http(timeout=self.api.timeout, disable_ssl_certificate_validation=True)
         return http_obj.request(url, method, body=body, headers=headers)
