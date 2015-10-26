@@ -106,6 +106,7 @@ class Media(ApiModel):
 
         new_media.created_time = timestamp_to_datetime(entry['created_time'])
 
+        new_media.location = None
         if entry['location'] and 'id' in entry:
             new_media.location = Location.object_from_dictionary(entry['location'])
 
