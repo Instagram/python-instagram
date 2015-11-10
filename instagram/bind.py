@@ -1,4 +1,3 @@
-import urllib
 from .oauth2 import OAuth2Request
 import re
 from .json_import import simplejson
@@ -6,7 +5,6 @@ import hmac
 from hashlib import sha256
 import six
 from six.moves.urllib.parse import quote
-import sys
 
 re_path_template = re.compile('{\w+}')
 
@@ -39,21 +37,7 @@ class InstagramAPIError(Exception):
         return "(%s) %s-%s" % (self.status_code, self.error_type, self.error_message)
 
 
-def bind_method(**config):
-
-    class InstagramAPIMethod(object):
-
-        path = config['path']
-        method = config.get('method', 'GET')
-        accepts_parameters = config.get("accepts_parameters", [])
-        signature = config.get("signature", False)
-        requires_target_user = config.get('requires_target_user', False)
-        paginates = config.get('paginates', False)
-        root_class = config.get('root_class', None)
-        response_type = config.get("response_type", "list")
-        include_secret = config.get("include_secret", False)
-        objectify_response = config.get("objectify_response", True)
-        exclude_format = config.get('exclude_format', False)
+class BaseInstagramAPIMethod(object):
 
         def __init__(self, api, *args, **kwargs):
             self.api = api
@@ -86,7 +70,7 @@ def bind_method(**config):
                 if key in self.parameters:
                     raise InstagramClientError("Parameter %s already supplied" % key)
                 self.parameters[key] = encode_string(value)
-            if 'user_id' in self.accepts_parameters and not 'user_id' in self.parameters \
+            if 'user_id' in self.accepts_parameters and 'user_id' not in self.parameters \
                and not self.requires_target_user:
                 self.parameters['user_id'] = 'self'
 
@@ -113,10 +97,10 @@ def bind_method(**config):
             if self.pagination_format == 'dict':
                 return pagination
             raise Exception('Invalid value for pagination_format: %s' % self.pagination_format)
-          
+
         def _do_api_request(self, url, method="GET", body=None, headers=None):
             headers = headers or {}
-            if self.signature and self.api.client_ips != None and self.api.client_secret != None:
+            if self.signature and self.api.client_ips is not None and self.api.client_secret is not None:
                 secret = self.api.client_secret
                 ips = self.api.client_ips
                 signature = hmac.new(secret, ips, sha256).hexdigest()
@@ -137,8 +121,8 @@ def bind_method(**config):
                 raise InstagramAPIError(content_obj.get('code'), content_obj.get('error_type'), content_obj.get('error_message'))
             api_responses = []
             status_code = content_obj['meta']['code']
-            self.api.x_ratelimit_remaining = response.get("x-ratelimit-remaining",None)
-            self.api.x_ratelimit = response.get("x-ratelimit-limit",None)
+            self.api.x_ratelimit_remaining = response.get("x-ratelimit-remaining", None)
+            self.api.x_ratelimit = response.get("x-ratelimit-limit", None)
             if status_code == 200:
                 if not self.objectify_response:
                     return content_obj, None
@@ -191,6 +175,22 @@ def bind_method(**config):
                 return content, next
             else:
                 return content
+
+
+def bind_method(**config):
+
+    class InstagramAPIMethod(BaseInstagramAPIMethod):
+        path = config['path']
+        method = config.get('method', 'GET')
+        accepts_parameters = config.get("accepts_parameters", [])
+        signature = config.get("signature", False)
+        requires_target_user = config.get('requires_target_user', False)
+        paginates = config.get('paginates', False)
+        root_class = config.get('root_class', None)
+        response_type = config.get("response_type", "list")
+        include_secret = config.get("include_secret", False)
+        objectify_response = config.get("objectify_response", True)
+        exclude_format = config.get('exclude_format', False)
 
     def _call(api, *args, **kwargs):
         method = InstagramAPIMethod(api, *args, **kwargs)
