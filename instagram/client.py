@@ -101,7 +101,7 @@ class InstagramAPI(oauth2.OAuth2API):
 
     user_liked_media = bind_method(
                 path="/users/self/media/liked",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
+                accepts_parameters=['max_like_id','count'],
                 root_class=Media,
                 paginates=True)
 
