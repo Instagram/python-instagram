@@ -94,10 +94,12 @@ class Media(ApiModel):
             for like in entry['likes']['data']:
                 new_media.likes.append(User.object_from_dictionary(like))
 
-        new_media.comment_count = entry['comments'].get('count',0)
         new_media.comments = []
-        for comment in entry['comments'].get('data',[]):
-            new_media.comments.append(Comment.object_from_dictionary(comment))
+        new_media.comment_count = 0
+        if 'comments' in entry:
+            new_media.comment_count = entry['comments'].get('count',0)
+            for comment in entry['comments'].get('data',[]):
+                new_media.comments.append(Comment.object_from_dictionary(comment))
 
         new_media.users_in_photo = []
         if entry.get('users_in_photo'):
