@@ -148,7 +148,7 @@ api.user(user_id)
 api.user_media_feed()*
 api.user_liked_media()*
 api.user_recent_media(user_id, count, max_id)*
-api.user_search(q, count, lat, lng, min_timestamp, max_timestamp)
+api.user_search(q, count, lat, lng)
 ```    
    
 Relationships: http://instagr.am/developer/endpoints/relationships/
@@ -171,7 +171,7 @@ Media: http://instagr.am/developer/endpoints/media/
 ``` python
 api.media(media_id)
 api.media_popular(count, max_id)
-api.media_search(q, count, lat, lng, min_timestamp, max_timestamp)
+api.media_search(q, count, lat, lng)
 ```
     
 Comments: http://instagr.am/developer/endpoints/comments/

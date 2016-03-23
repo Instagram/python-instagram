@@ -35,7 +35,7 @@ class InstagramAPI(oauth2.OAuth2API):
 
     media_search = bind_method(
                 path="/media/search",
-                accepts_parameters=SEARCH_ACCEPT_PARAMETERS + ['lat', 'lng', 'min_timestamp', 'max_timestamp', 'distance'],
+                accepts_parameters=SEARCH_ACCEPT_PARAMETERS + ['lat', 'lng', 'distance'],
                 root_class=Media)
 
     media_shortcode = bind_method(
@@ -107,7 +107,7 @@ class InstagramAPI(oauth2.OAuth2API):
 
     user_recent_media = bind_method(
                 path="/users/{user_id}/media/recent",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['user_id', 'min_id', 'max_timestamp', 'min_timestamp'],
+                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['user_id', 'min_id'],
                 root_class=Media,
                 paginates=True)
 
