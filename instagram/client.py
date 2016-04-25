@@ -133,6 +133,10 @@ class InstagramAPI(oauth2.OAuth2API):
                 accepts_parameters=["user_id"],
                 root_class=User,
                 response_type="entry")
+    user_self = bind_method(
+                path="/users/self",
+                method = "GET",
+                root_class=User)
 
     location_recent_media = bind_method(
                 path="/locations/{location_id}/media/recent",

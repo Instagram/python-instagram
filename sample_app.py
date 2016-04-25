@@ -14,8 +14,8 @@ session_opts = {
 app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts)
 
 CONFIG = {
-    'client_id': '<client_id>',
-    'client_secret': '<client_secret>',
+    'client_id': '<3c83c3ebf36b4445ad069560c0557f70>',
+    'client_secret': '<9b2971e8f6f1440c867b8c7a8a7bc77f>',
     'redirect_uri': 'http://localhost:8515/oauth_callback'
 }
 

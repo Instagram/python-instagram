@@ -112,7 +112,7 @@ class Media(ApiModel):
         new_media.caption = None
         if entry['caption']:
             new_media.caption = Comment.object_from_dictionary(entry['caption'])
-        
+
         new_media.tags = []
         if entry['tags']:
             for tag in entry['tags']:
@@ -199,6 +199,8 @@ class User(ApiModel):
 
     def __unicode__(self):
         return "User: %s" % self.username
+    def getName(self):
+        return self.username;
 
 
 class Relationship(ApiModel):
