@@ -1,3 +1,22 @@
+'''
+The bulk of this program is based off of the sample code that Instagram put out to run their API
+the myInfo section was written by Tim
+ with minor modifications in the models.py so that the username and id number could be shown to the user
+
+To run it:
+  * Download bottle if you don't already have it: pip install bottle
+  * Download bottle-session if you don't already have it: pip install bottle-session
+  * Download and run a redis instance on port 6379, here's their website http://redis.io
+  * Run the file; it will host a local server on port 8515.
+  * Visit http://localhost:8515 in a web browser
+  *
+  * Login: as a user we created:
+  *     Sandbox username: joejones353
+  *             password: DrwnSurfz
+'''
+
+
+
 import bottle
 import beaker.middleware
 from bottle import route, redirect, post, run, request, hook
@@ -45,7 +64,7 @@ def get_nav():
 
     nav_menu = ("<h1>Menu for Tim's and Jeff's Instagram API</h1>"
                 "<ul>"
-                    "<li><a href='/feed'>Feed</a></li>"
+                    "<li><a href='/myInfo'>My information</a></li>"
                 "</ul>")
     return nav_menu
 
@@ -66,8 +85,8 @@ def on_callback():
         print(e)
     return get_nav()
 
-@route('/feed')
-def on_feed():
+@route('/myInfo')
+def myInfo():
     content = "<h2>User's Feed</h2>"
     access_token = request.session['access_token']
     if not access_token:
@@ -78,6 +97,7 @@ def on_feed():
         myUser =  api.user()
 
         content +="<p>Hello "+myUser.getName()+", thank you for logging in.</p>"
+        content+="<p>Your id number: "+myUser.id+"</p>"
 
     except Exception as e:
         print(e)
