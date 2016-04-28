@@ -14,8 +14,8 @@ session_opts = {
 app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts)
 
 CONFIG = {
-    'client_id': '<3c83c3ebf36b4445ad069560c0557f70>',
-    'client_secret': '<9b2971e8f6f1440c867b8c7a8a7bc77f>',
+    'client_id': '3c83c3ebf36b4445ad069560c0557f70',
+    'client_secret': '9b2971e8f6f1440c867b8c7a8a7bc77f',
     'redirect_uri': 'http://localhost:8515/oauth_callback'
 }
 
@@ -34,7 +34,7 @@ reactor.register_callback(subscriptions.SubscriptionType.TAG, process_tag_update
 @route('/')
 def home():
     try:
-        url = unauthenticated_api.get_authorize_url(scope=["likes","comments"])
+        url = unauthenticated_api.get_authorize_url(scope=["likes","comments","relationships","follower_list","basic","public_content"])
         return '<a href="%s">Connect with Instagram</a>' % url
     except Exception as e:
         print(e)
@@ -78,6 +78,7 @@ def on_recent():
     try:
         api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
         recent_media, next = api.user_recent_media()
+        print recent_media
         photos = []
         for media in recent_media:
             photos.append('<div style="float:left;">')

@@ -65,6 +65,9 @@ def get_nav():
     nav_menu = ("<h1>Menu for Tim's and Jeff's Instagram API</h1>"
                 "<ul>"
                     "<li><a href='/myInfo'>My information</a></li>"
+                "</ul>"
+                "<ul>"
+                    "<li><a href='/myRecentLikes'>Posts that I liked</a></li>"
                 "</ul>")
     return nav_menu
 
@@ -94,15 +97,46 @@ def myInfo():
     try:
         api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
-        myUser =  api.user()
+        myUser =  api.user() #makes an API call
 
         content +="<p>Hello "+myUser.getName()+", thank you for logging in.</p>"
         content+="<p>Your id number: "+myUser.id+"</p>"
 
+        test1 = api.user_followed_by()
+
+        content += "<p>"+test1.__str__()+"</p>"
+        print test1
+
     except Exception as e:
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
+@route('/myRecentLikes')
+def myRecentLikes():
+    content = "<h2>User's Recent Likes</h2>"
+    access_token = request.session['access_token']
+    if not access_token:
+        return 'Missing Access Token'
+    try:
+        api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
+
+        myLikedPosts, next = api.user_liked_media()
+        print myLikedPosts
+        photos = []
+        for media in myLikedPosts:
+            photos.append('<div style="float:left;">')
+            if(media.type == 'video'):
+                photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
+            else:
+                photos.append('<img src="%s"/>' % (media.get_low_resolution_url()))
+            photos.append("<br/> <a href='/media_like/%s'>Like</a>  <a href='/media_unlike/%s'>Un-Like</a>  LikesCount=%s</div>" % (media.id,media.id,media.like_count))
+        content += ''.join(photos)
+
+        #content +="<p>Here are your recent likes:\n "+myLikedPosts.__str__()+"</p>"
+
+    except Exception as e:
+        print(e)
+    return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 
 @route('/realtime_callback')
