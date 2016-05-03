@@ -20,7 +20,10 @@ To run it:
 import bottle
 import beaker.middleware
 from bottle import route, redirect, post, run, request, hook
-from instagram import client, subscriptions
+from instagram import client, subscriptions, helper
+from instagram.client import InstagramAPI
+import time
+from datetime import date
 
 bottle.debug(True)
 
@@ -67,6 +70,12 @@ def get_nav():
                     "<li><a href='/myInfo'>My information</a></li>"
                 "</ul>"
                 "<ul>"
+                    "<li><a href='/myFollowers'>My Followers List</a></li>"
+                "</ul>"
+                "<ul>"
+                    "<li><a href='/myStats'>My Statistics</a></li>"
+                "</ul>"
+                "<ul>"
                     "<li><a href='/myRecentLikes'>Posts that I liked</a></li>"
                 "</ul>")
     return nav_menu
@@ -81,7 +90,7 @@ def on_callback():
         access_token, user_info = unauthenticated_api.exchange_code_for_access_token(code)
         if not access_token:
             return 'Could not get access token'
-        api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
         request.session['access_token'] = access_token
 
     except Exception as e:
@@ -95,46 +104,111 @@ def myInfo():
     if not access_token:
         return 'Missing Access Token'
     try:
-        api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
         myUser =  api.user() #makes an API call
 
         content +="<p>Hello "+myUser.getName()+", thank you for logging in.</p>"
         content+="<p>Your id number: "+myUser.id+"</p>"
 
-        test1 = api.user_followed_by()
 
-        content += "<p>"+test1.__str__()+"</p>"
-        print test1
 
     except Exception as e:
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
+
+@route('/myFollowers')
+def myFollowers():
+    content = "<h2>User's Followers</h2>"
+    access_token = request.session['access_token']
+    if not access_token:
+        return 'Missing Access Token'
+    try:
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+
+
+
+        follower_list, next_ = api.user_followed_by()
+        counter =0
+
+        for user in follower_list:
+            content+="<p>"+user.getName()+"</p>"
+            counter = counter +1
+
+        content+="</h3>Total follower count: "+str(counter)+"</h3><p></p><p></p>"
+
+
+    except Exception as e:
+        print(e)
+    return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
+
+@route('/myStats')
+def myStats():
+    content = "<h2>Your Statistics</h2>"
+    access_token = request.session['access_token']
+    if not access_token:
+        return 'Missing Access Token'
+    try:
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+
+        today= date.today()
+        today_ts = helper.datetime_to_timestamp(today)
+
+        media_feed, next_ = api.user_recent_media(user_id=(api.user()).id, min_id = 999999, max_timestamp = today_ts)
+        counter =0
+
+        #print "my list is : "+type(follower_list)
+        """for item in follower_list:
+            print type(item)
+            #content+="<p>"+item)+"</p>"
+            counter = counter +1"""
+
+        content+="</h3>Total follower count: "+str(counter)+"</h3><p></p><p></p>"
+
+
+    except Exception as e:
+        print "Something went wrong"
+        print(e)
+    return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
+
+
 @route('/myRecentLikes')
 def myRecentLikes():
     content = "<h2>User's Recent Likes</h2>"
     access_token = request.session['access_token']
     if not access_token:
+        print "Missing Access Token"
         return 'Missing Access Token'
     try:
-        api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+        print "in try..."
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+        """
+        print "made api"
+        follows, next_ = api.user_follows()
+        while next_:
+            more_follows, next_ = api.user_follows(with_next_url=next_)
+            follows.extend(more_follows)"""
 
 
-        myLikedPosts, next = api.user_liked_media()
-        print myLikedPosts
-        photos = []
-        for media in myLikedPosts:
+        #liked_media, next = api.user_liked_media()
+        print "made LikedPosts"
+        #print "type: "+type(myLikedPosts)
+
+        #print myLikedPosts
+        """        photos = []
+        for media in liked_media:
             photos.append('<div style="float:left;">')
             if(media.type == 'video'):
                 photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
             else:
                 photos.append('<img src="%s"/>' % (media.get_low_resolution_url()))
-            photos.append("<br/> <a href='/media_like/%s'>Like</a>  <a href='/media_unlike/%s'>Un-Like</a>  LikesCount=%s</div>" % (media.id,media.id,media.like_count))
-        content += ''.join(photos)
+            #photos.append("<br/> <a href='/media_like/%s'>Like</a>  <a href='/media_unlike/%s'>Un-Like</a>  LikesCount=%s</div>" % (media.id,media.id,media.like_count))
+        content += ''.join(photos)"""
 
         #content +="<p>Here are your recent likes:\n "+myLikedPosts.__str__()+"</p>"
 
     except Exception as e:
+        print "in exception ..."
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
