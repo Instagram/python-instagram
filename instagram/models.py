@@ -13,11 +13,11 @@ class ApiModel(object):
         return cls(**entry_str_dict)
 
     def __repr__(self):
-        return str(self)
-        # if six.PY2:
-        #     return six.text_type(self).encode('utf8')
-        # else:
-        #     return self.encode('utf8')
+        #return str(self)
+        if six.PY2:
+            return six.text_type(self).encode('utf8')
+        else:
+            return self.encode('utf8')
 
     def __str__(self):
         if six.PY3:

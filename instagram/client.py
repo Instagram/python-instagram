@@ -136,7 +136,8 @@ class InstagramAPI(oauth2.OAuth2API):
     user_self = bind_method(
                 path="/users/self",
                 method = "GET",
-                root_class=User)
+                root_class=User
+                ) #this line was added by me
 
     location_recent_media = bind_method(
                 path="/locations/{location_id}/media/recent",
