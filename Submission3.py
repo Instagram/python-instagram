@@ -107,9 +107,8 @@ def myInfo():
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
         myUser =  api.user() #makes an API call
-        myInformation = api.user_self() #makes another API call
-        print type(myInformation)
-        print myInformation
+        #myInformation = api.user_self() #makes another API call
+        print type(myUser.myEntryDictionary)
 
         content +="<p>Hello "+myUser.getName()+", thank you for logging in.</p>"
         content+="<p>Your id number: "+myUser.id+"</p>"

@@ -9,7 +9,10 @@ class ApiModel(object):
         # make dict keys all strings
         if entry is None:
             return ""
+        print "HERE"
+        print entry
         entry_str_dict = dict([(str(key), value) for key, value in entry.items()])
+        print "About to return"
         return cls(**entry_str_dict)
 
     def __repr__(self):
@@ -191,6 +194,7 @@ class Location(ApiModel):
 
 
 class User(ApiModel):
+    #myEntryDictionary = model.entry_str_dict
 
     def __init__(self, id, *args, **kwargs):
         self.id = id
