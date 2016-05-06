@@ -99,7 +99,7 @@ def on_callback():
 
 @route('/myInfo')
 def myInfo():
-    content = "<h2>User's Feed</h2>"
+    content = "<h2>User's Information</h2>"
     access_token = request.session['access_token']
     if not access_token:
         return 'Missing Access Token'
@@ -108,10 +108,13 @@ def myInfo():
 
         myUser =  api.user() #makes an API call
         #myInformation = api.user_self() #makes another API call
-        print type(myUser.myEntryDictionary)
 
-        content +="<p>Hello "+myUser.getName()+", thank you for logging in.</p>"
-        content+="<p>Your id number: "+myUser.id+"</p>"
+        content += "<img src="+myUser.profile_picture+" alt='Profile Picture' >"
+        content +="<p>Username : "+myUser.username+"</p>"
+        content +="<p>Full Name: "+myUser.full_name+"</p>"
+        content +="<p>ID number: "+myUser.id+"</p>"
+        content +="<p>Biography: "+myUser.bio+"</p>"
+        content +="<p>Counts:<br>     Posts: "+ str(myUser.counts.get('media'))+"<br>     Followers: "+ str(myUser.counts.get('followed_by'))+"<br>     Following: "+ str(myUser.counts.get('follows'))+"</p>"
 
 
 
