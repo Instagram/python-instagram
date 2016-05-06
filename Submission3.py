@@ -156,16 +156,17 @@ def myStats():
     try:
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
-        now= date.today()
+        '''now= date.today()
         now_ts = helper.datetime_to_timestamp(now)
         print now_ts
 
         beginning = date(2012,1,1)
         beginning_ts = helper.datetime_to_timestamp(beginning)
-        print beginning_ts
+        print beginning_ts'''
 
-        recent_media, next_ = api.user_recent_media(user_id= ((api.user()).id) , count=10)
-        for media in recent_media:
+        liked_media, next_ = api.user_liked_media(count=10)
+        print "API call for recent media made successfully"
+        for media in liked_media:
            print media.caption.text
 
 

@@ -93,7 +93,7 @@ class InstagramAPI(oauth2.OAuth2API):
                 response_type="entry",
                 root_class=Media)
 
-    user_media_feed = bind_method(
+    user_media_feed = bind_method( #deprecated
                 path="/users/self/feed",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
                 root_class=Media,
@@ -109,6 +109,7 @@ class InstagramAPI(oauth2.OAuth2API):
                 path="/users/{user_id}/media/recent",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['user_id', 'min_id', 'max_timestamp', 'min_timestamp'],
                 root_class=Media,
+                #response_type = "entry", #added by me
                 paginates=True)
 
     user_search = bind_method(
