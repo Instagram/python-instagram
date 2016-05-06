@@ -159,27 +159,17 @@ def myStats():
         '''now= date.today()
         now_ts = helper.datetime_to_timestamp(now)
         print now_ts
-
         beginning = date(2012,1,1)
         beginning_ts = helper.datetime_to_timestamp(beginning)
         print beginning_ts'''
 
-        liked_media, next_ = api.user_liked_media(count=10)
+        liked_media, next = api.user_liked_media(count=10)
         print "API call for recent media made successfully"
-        for media in liked_media:
-           print media.caption.text
 
 
         #media_feed, next_ = api.user_recent_media(user_id=(api.user()).id, min_id = 15, max_timestamp = now_ts, min_timestamp = beginning_ts)
         counter =0
 
-        #print "my list is : "+type(follower_list)
-        """for item in follower_list:
-            print type(item)
-            #content+="<p>"+item)+"</p>"
-            counter = counter +1"""
-
-        content+="</h3>Total follower count: "+str(counter)+"</h3><p></p><p></p>"
 
 
     except Exception as e:
@@ -198,6 +188,11 @@ def myRecentLikes():
     try:
         print "in try..."
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+
+        liked_media, next = api.user_liked_media(count=10)
+        print "API call for recent media made successfully"
+
+        
         """
         print "made api"
         follows, next_ = api.user_follows()
