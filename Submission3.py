@@ -24,6 +24,7 @@ from instagram import client, subscriptions, helper
 from instagram.client import InstagramAPI
 import time
 from datetime import date
+from collections import Counter
 
 bottle.debug(True)
 
@@ -68,14 +69,8 @@ def get_nav():
     nav_menu = ("<h1>Menu for Tim's and Jeff's Instagram API</h1>"
                 "<ul>"
                     "<li><a href='/myInfo'>My information</a></li>"
-                "</ul>"
-                "<ul>"
                     "<li><a href='/myFollowers'>My Followers List</a></li>"
-                "</ul>"
-                "<ul>"
                     "<li><a href='/myStats'>My Statistics</a></li>"
-                "</ul>"
-                "<ul>"
                     "<li><a href='/myRecentLikes'>Posts that I liked</a></li>"
                 "</ul>")
     return nav_menu
@@ -114,7 +109,10 @@ def myInfo():
         content +="<p>Full Name: "+myUser.full_name+"</p>"
         content +="<p>ID number: "+myUser.id+"</p>"
         content +="<p>Biography: "+myUser.bio+"</p>"
-        content +="<p>Counts:<br>     Posts: "+ str(myUser.counts.get('media'))+"<br>     Followers: "+ str(myUser.counts.get('followed_by'))+"<br>     Following: "+ str(myUser.counts.get('follows'))+"</p>"
+        content +="<h3>Counts:</h3>"
+        content +="<ul><li>Posts: "+ str(myUser.counts.get('media'))+"</li>"
+        content +="<li>Followers: "+ str(myUser.counts.get('followed_by'))+"</li>"
+        content +="<li>Following: "+ str(myUser.counts.get('follows'))+"</li></ul>"
 
 
 
@@ -156,19 +154,8 @@ def myStats():
     try:
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
-        '''now= date.today()
-        now_ts = helper.datetime_to_timestamp(now)
-        print now_ts
-        beginning = date(2012,1,1)
-        beginning_ts = helper.datetime_to_timestamp(beginning)
-        print beginning_ts'''
+        media_feed, next_ = api.user_recent_media(user_id=(api.user()).id, min_id = 15, max_timestamp = now_ts, min_timestamp = beginning_ts)
 
-        liked_media, next = api.user_liked_media(count=10)
-        print "API call for recent media made successfully"
-
-
-        #media_feed, next_ = api.user_recent_media(user_id=(api.user()).id, min_id = 15, max_timestamp = now_ts, min_timestamp = beginning_ts)
-        counter =0
 
 
 
@@ -179,7 +166,7 @@ def myStats():
 
 
 @route('/myRecentLikes')
-def myRecentLikes():
+def myRecentLikes(): #written by Tim
     content = "<h2>User's Recent Likes</h2>"
     access_token = request.session['access_token']
     if not access_token:
@@ -190,33 +177,34 @@ def myRecentLikes():
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
         liked_media, next = api.user_liked_media(count=10)
-        print "API call for recent media made successfully"
+        print "API call for 10 most recently liked media made successfully"
 
-        
-        """
-        print "made api"
-        follows, next_ = api.user_follows()
-        while next_:
-            more_follows, next_ = api.user_follows(with_next_url=next_)
-            follows.extend(more_follows)"""
-
-
-        #liked_media, next = api.user_liked_media()
-        print "made LikedPosts"
-        #print "type: "+type(myLikedPosts)
-
-        #print myLikedPosts
-        """        photos = []
+        counter = 0;
+        photos = []
+        filters = []
         for media in liked_media:
+            filters.append(media.filter)
+
+            counter = counter +1
+
             photos.append('<div style="float:left;">')
             if(media.type == 'video'):
+                content += " this is a video below"
                 photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
             else:
-                photos.append('<img src="%s"/>' % (media.get_low_resolution_url()))
-            #photos.append("<br/> <a href='/media_like/%s'>Like</a>  <a href='/media_unlike/%s'>Un-Like</a>  LikesCount=%s</div>" % (media.id,media.id,media.like_count))
-        content += ''.join(photos)"""
+                photos.append('<img src="%s"/>' % (media.get_thumbnail_url()))
 
-        #content +="<p>Here are your recent likes:\n "+myLikedPosts.__str__()+"</p>"
+        content += ''.join(photos) #display media
+
+        content += "<p> Count: "+str(counter)+"</p>"
+
+        filterCounter = Counter(filters) #makes a counter object based on the list of filters
+
+        #outputs a ranked list of the filters used in the liked posts above
+        content += "<h2> Filters used (count): </h2><ol>"
+        for filterWithCount in filterCounter.most_common():
+            content += "<li>" + filterWithCount[0] +"  ("+str(filterWithCount[1])+")</li>"
+        content += "</ol>"
 
     except Exception as e:
         print "in exception ..."
