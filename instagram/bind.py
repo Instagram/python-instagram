@@ -7,6 +7,7 @@ from hashlib import sha256
 import six
 from six.moves.urllib.parse import quote
 import sys
+import urlparse
 
 re_path_template = re.compile('{\w+}')
 
@@ -65,6 +66,7 @@ def bind_method(**config):
             self.return_json = kwargs.pop("return_json", False)
             self.max_pages = kwargs.pop("max_pages", 3)
             self.with_next_url = kwargs.pop("with_next_url", None)
+            self.objectify_response = kwargs.pop("objectify_response", self.objectify_response)
             self.parameters = {}
             self._build_parameters(args, kwargs)
             self._build_path()
@@ -108,6 +110,17 @@ def bind_method(**config):
         def _build_pagination_info(self, content_obj):
             """Extract pagination information in the desired format."""
             pagination = content_obj.get('pagination', {})
+            # prepare it for signed requests turned on
+            if pagination.get('next_url'):
+                parsed_url = urlparse.urlparse(pagination.get('next_url'))
+                new_params = urlparse.parse_qs(parsed_url.query)
+                try:
+                    del new_params['sig']
+                    del new_params['access_token']
+                except KeyError:
+                    pass
+                else:
+                    pagination['next_url'] = OAuth2Request(self.api).url_for_get(self.path, new_params)
             if self.pagination_format == 'next_url':
                 return pagination.get('next_url')
             if self.pagination_format == 'dict':
@@ -123,25 +136,38 @@ def bind_method(**config):
                 headers['X-Insta-Forwarded-For'] = '|'.join([ips, signature])
 
             response, content = OAuth2Request(self.api).make_request(url, method=method, body=body, headers=headers)
-            if response['status'] == '503' or response['status'] == '429':
-                raise InstagramAPIError(response['status'], "Rate limited", "Your client is making too many request per second")
+            is_rate_limited_error = lambda response: response['status'] == '503' or response['status'] == '429'
             try:
                 content_obj = simplejson.loads(content)
             except ValueError:
+                if is_rate_limited_error(response):
+                    raise InstagramAPIError(
+                        response['status'],
+                        "Rate limited",
+                        "Your client is making too many request per second"
+                    )
                 raise InstagramClientError('Unable to parse response, not valid JSON.', status_code=response['status'])
+
             # Handle OAuthRateLimitExceeded from Instagram's Nginx which uses different format to documented api responses
             if 'meta' not in content_obj:
                 if content_obj.get('code') == 420 or content_obj.get('code') == 429:
                     error_message = content_obj.get('error_message') or "Your client is making too many request per second"
                     raise InstagramAPIError(content_obj.get('code'), "Rate limited", error_message)
                 raise InstagramAPIError(content_obj.get('code'), content_obj.get('error_type'), content_obj.get('error_message'))
+
+            if is_rate_limited_error(response):
+                raise InstagramAPIError(
+                    response['status'],
+                    "Rate limited",
+                    content_obj['meta']['error_message']
+                )
             api_responses = []
             status_code = content_obj['meta']['code']
             self.api.x_ratelimit_remaining = response.get("x-ratelimit-remaining",None)
             self.api.x_ratelimit = response.get("x-ratelimit-limit",None)
             if status_code == 200:
                 if not self.objectify_response:
-                    return content_obj, None
+                    return content_obj, self._build_pagination_info(content_obj)
 
                 if self.response_type == 'list':
                     for entry in content_obj['data']:

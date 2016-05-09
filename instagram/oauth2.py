@@ -135,16 +135,16 @@ class OAuth2Request(object):
     def post_request(self, path, **kwargs):
         return self.make_request(self.prepare_request("POST", path, kwargs))
 
-    def _full_url(self, path, include_secret=False, include_signed_request=True):
+    def _full_url(self, path, include_secret=False, include_signed_request=True, params=None):
         return "%s://%s%s%s%s%s" % (self.api.protocol,
                                   self.api.host,
                                   self.api.base_path,
                                   path,
                                   self._auth_query(include_secret),
-                                  self._signed_request(path, {}, include_signed_request, include_secret))
+                                  self._signed_request(path, params or {}, include_signed_request, include_secret))
 
     def _full_url_with_params(self, path, params, include_secret=False, include_signed_request=True):
-        return (self._full_url(path, include_secret) + 
+        return (self._full_url(path, include_secret, include_signed_request=False) +
                 self._full_query_with_params(params) +
                 self._signed_request(path, params, include_signed_request, include_secret))
 
@@ -219,7 +219,7 @@ class OAuth2Request(object):
             if method == "POST":
                 body = self._post_body(params)
                 headers = {'Content-type': 'application/x-www-form-urlencoded'}
-                url = self._full_url(path, include_secret)
+                url = self._full_url(path, include_secret, params=params)
             else:
                 url = self._full_url_with_params(path, params, include_secret)
         else:
