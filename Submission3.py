@@ -175,6 +175,7 @@ def myRecentLikes(): #written by Tim
     try:
         print "in try..."
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+        _user_id =(api.user()).id
 
         liked_media, next = api.user_liked_media(count=10)
         print "API call for 10 most recently liked media made successfully"
@@ -182,9 +183,13 @@ def myRecentLikes(): #written by Tim
         counter = 0;
         photos = []
         filters = []
+        usersThatLiked = []
         for media in liked_media:
             filters.append(media.filter)
-
+            #usersThatLiked.extend(media.likes)
+            print media.id
+            usersThatLiked.extend(api.media_likes(media_id = media.id))
+            print usersThatLiked
             counter = counter +1
 
             photos.append('<div style="float:left;">')
@@ -199,6 +204,7 @@ def myRecentLikes(): #written by Tim
         content += "<p> Count: "+str(counter)+"</p>"
 
         filterCounter = Counter(filters) #makes a counter object based on the list of filters
+        usersThatLikedCounter = Counter(usersThatLiked) #counts instances of any person liking the same pictures that the user did
 
         #outputs a ranked list of the filters used in the liked posts above
         content += "<h2> Filters used (count): </h2><ol>"
@@ -206,11 +212,37 @@ def myRecentLikes(): #written by Tim
             content += "<li>" + filterWithCount[0] +"  ("+str(filterWithCount[1])+")</li>"
         content += "</ol>"
 
+        print usersThatLikedCounter
+        #outputs the most common users that liked the same media
+        content += "<h2> Top users that also liked these posts: </h2><ol>"
+        for userWithCount in usersThatLikedCounter.most_common(4):
+            if (userWithCount[0].id != _user_id): #makes sure that the current user is not displayed
+                content += "<li>" + userWithCount[0].username +"  ("+str(userWithCount[1])+" similar likes)"
+                content += ("    <a href='/user_follow/%s'>Follow</a></li>" % (userWithCount[0].id))
+        content += "</ol>"
+
     except Exception as e:
         print "in exception ..."
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
+
+@route('/user_follow/<id>')
+def user_follow(id):
+    content = ""
+    print "in User_follow"
+    access_token = request.session['access_token']
+    if not access_token:
+        print "Missing Access Token"
+        return 'Missing Access Token'
+    try:
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+        api.follow_user(user_id = id)
+        content += "You are now following that user"
+
+    except Exception as e:
+        print(e)
+    return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/realtime_callback')
 @post('/realtime_callback')

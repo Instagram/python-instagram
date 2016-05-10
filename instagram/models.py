@@ -9,10 +9,10 @@ class ApiModel(object):
         # make dict keys all strings
         if entry is None:
             return ""
-        print "HERE"
-        print entry
+        #print "HERE"
+        #print entry
         entry_str_dict = dict([(str(key), value) for key, value in entry.items()])
-        print "About to return"
+        #print "About to return"
         return cls(**entry_str_dict)
 
     def __repr__(self):
@@ -93,7 +93,7 @@ class Media(ApiModel):
             new_media.user_has_liked = entry['user_has_liked']
         new_media.like_count = entry['likes']['count']
         new_media.likes = []
-        
+
         if 'data' in entry['likes']:
             for like in entry['likes']['data']:
                 new_media.likes.append(User.object_from_dictionary(like))
@@ -206,8 +206,13 @@ class User(ApiModel):
     def __unicode__(self):
         return "User: %s" % self.username
     def getName(self):
-        return self.username;
-
+        return self.username
+    def __hash__(self):
+        return int(self.id)
+    def __eq__(self, other):
+        return (self.id == other.id)
+    def __cmp__(self, other):
+        return (self.id == other.id)
 
 class Relationship(ApiModel):
 
