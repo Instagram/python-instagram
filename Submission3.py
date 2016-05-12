@@ -66,12 +66,12 @@ def home():
 
 def get_nav():
 
-    nav_menu = ("<h1>Menu for Tim's and Jeff's Instagram API</h1>"
-                "<ul>"
+    nav_menu = ("<body style=\"background-color:lightgrey;\"><font size=\"6\"><h1 style=\"font-family:verdana; text-align:center;\">Tim's and Jeff's Instagram API</h1>"
+                "<h2>Main Menu:</h2>"
+                "<ul> <font size=\"3\">"
                     "<li><a href='/myInfo'>My information</a></li>"
                     "<li><a href='/myFollowers'>My Followers List</a></li>"
-                    "<li><a href='/myStats'>My Statistics</a></li>"
-                    "<li><a href='/myRecentLikes'>Posts that I liked</a></li>"
+                    "<li><a href='/myRecentLikes'>Posts that I liked, Statistics, and Suggested People to Follow</a></li>"
                 "</ul>")
     return nav_menu
 
@@ -133,36 +133,21 @@ def myFollowers():
 
         follower_list, next_ = api.user_followed_by()
         counter =0
+        content+="<ul>"
 
         for user in follower_list:
-            content+="<p>"+user.getName()+"</p>"
+            content+="<li><em>"+user.getName()+"</em></li>"
             counter = counter +1
 
-        content+="</h3>Total follower count: "+str(counter)+"</h3><p></p><p></p>"
+        content+="</ul>"
+
+        content+="</h2>Total follower count: "+str(counter)+"</h2><p></p><p></p>"
 
 
     except Exception as e:
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
-@route('/myStats')
-def myStats():
-    content = "<h2>Your Statistics</h2>"
-    access_token = request.session['access_token']
-    if not access_token:
-        return 'Missing Access Token'
-    try:
-        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
-
-        media_feed, next_ = api.user_recent_media(user_id=(api.user()).id, min_id = 15, max_timestamp = now_ts, min_timestamp = beginning_ts)
-
-
-
-
-    except Exception as e:
-        print "Something went wrong"
-        print(e)
-    return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 
 @route('/myRecentLikes')
@@ -197,11 +182,11 @@ def myRecentLikes(): #written by Tim
                 content += " this is a video below"
                 photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
             else:
-                photos.append('<img src="%s"/>' % (media.get_thumbnail_url()))
+                photos.append('<div class="floated_img"><img src="%s"/></div>' % (media.get_standard_resolution_url()))
 
         content += ''.join(photos) #display media
 
-        content += "<p> Count: "+str(counter)+"</p>"
+        #content += "<p> Count: "+str(counter)+"</p>"
 
         filterCounter = Counter(filters) #makes a counter object based on the list of filters
         usersThatLikedCounter = Counter(usersThatLiked) #counts instances of any person liking the same pictures that the user did
@@ -215,10 +200,11 @@ def myRecentLikes(): #written by Tim
         print usersThatLikedCounter
         #outputs the most common users that liked the same media
         content += "<h2> Top users that also liked these posts: </h2><ol>"
-        for userWithCount in usersThatLikedCounter.most_common(4):
+        for userWithCount in usersThatLikedCounter.most_common(6):
             if (userWithCount[0].id != _user_id): #makes sure that the current user is not displayed
                 content += "<li>" + userWithCount[0].username +"  ("+str(userWithCount[1])+" similar likes)"
-                content += ("    <a href='/user_follow/%s'>Follow</a></li>" % (userWithCount[0].id))
+                content += ("    <a href='/user_follow/%s'>Follow</a>      Here's a link to their Instagram Profile:" % (userWithCount[0].id))
+                content += ("    <a href='https://www.instagram.com/%s'>instagram.com/%s</a></li>" % (userWithCount[0].username, userWithCount[0].username))
         content += "</ol>"
 
     except Exception as e:
@@ -238,7 +224,7 @@ def user_follow(id):
     try:
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
         api.follow_user(user_id = id)
-        content += "You are now following that user"
+        content += "<h2>Congratulations, you are following that user!</h2>"
 
     except Exception as e:
         print(e)
