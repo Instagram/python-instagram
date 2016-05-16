@@ -78,6 +78,7 @@ def get_nav():
                 "<ul> <font size=\"3\">"
                     "<li><a href='/myInfo'>My information</a></li>"
                     "<li><a href='/myFollowers'>My Followers List</a></li>"
+                    "<li><a href='/myFollowing'>My Following List</a></li>"
                     "<li><a href='/myRecentLikes'>Posts that I liked, Statistics, and Suggested People to Follow</a></li>"
                 "</ul>")
     return nav_menu
@@ -117,8 +118,8 @@ def myInfo(): #written by Tim
         content +="<p>Biography: "+myUser.bio+"</p>"
         content +="<h3>Counts:</h3>"
         content +="<ul><li>Posts: "+ str(myUser.counts.get('media'))+"</li>"
-        content +="<li>Followers: "+ str(myUser.counts.get('followed_by'))+"</li>"
-        content +="<li>Following: "+ str(myUser.counts.get('follows'))+"</li></ul>"
+        content +="<li><a href='/myFollowers'>Followers: </a>"+ str(myUser.counts.get('followed_by'))+"</li>"
+        content +="<li><a href='/myFollowing'>Following: </a>"+ str(myUser.counts.get('follows'))+"</li></ul>"
 
 
 
@@ -129,7 +130,7 @@ def myInfo(): #written by Tim
 
 @route('/myFollowers')
 def myFollowers(): #written by Tim
-    content = "<h2>User's Followers</h2>"
+    content = "<h2>My Followers</h2>"
     access_token = request.session['access_token']
     if not access_token:
         return 'Missing Access Token'
@@ -155,6 +156,34 @@ def myFollowers(): #written by Tim
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
+@route('/myFollowing')
+def myFollowing(): #written by Tim
+    content = "<h2>Accounts I Follow</h2>"
+    access_token = request.session['access_token']
+    if not access_token:
+        return 'Missing Access Token'
+    try:
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
+
+
+
+        follow_list, next_ = api.user_follows()
+        counter =0
+        content+="<ul>"
+
+        for user in follow_list:
+            content+="<li><em>"+user.getName()+"</em></li>"
+            counter = counter +1
+
+        content+="</ul>"
+
+        content+="</h2>Total following count: "+str(counter)+"</h2><p></p><p></p>"
+
+
+    except Exception as e:
+        print(e)
+    return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
+
 
 
 @route('/myRecentLikes')
@@ -169,7 +198,7 @@ def myRecentLikes(): #written by Tim
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
         _user_id =(api.user()).id
 
-        liked_media, next = api.user_liked_media(count=10)
+        liked_media, next = api.user_liked_media(count=9)
 
         print "Webpage is loading...."
 
@@ -178,33 +207,9 @@ def myRecentLikes(): #written by Tim
         photos = []
         filters = []
         usersThatLiked = []
-        '''
-        <div id="earlylife_images">
-            <figure>
-                <img src="images/early/moore01.jpg" alt="Roger Moore Teenage" width="150" height="150">
-                <figcaption>A young Roger Moore</figcaption>
-            </figure>
-
-            <figure>
-                <img src="images/early/moore02.jpg" alt="Roger Moore 30's" width="150" height="150">
-                <figcaption>Roger Moore in his 30's</figcaption>
-            </figure>
-
-            <figure>
-                <img src="images/early/moore03.jpg" alt="Roger Moore as James Bond" width="150" height="150">
-                <figcaption>Roger Moore as James Bond</figcaption>
-            </figure>
-
-            <figure>
-                <img src="images/early/moore04.jpg" alt="Roger Moore Recent" width="150" height="150">
-                <figcaption>Roger Moore in more recent years</figcaption>
-            </figure>
-
-            </div>
-        '''
 
         content += "<div id='liked_media'>"
-        content +="<style>figure{   width:25%;   float:left;   margin:0px;   text-align:center;  padding:0px;} </style>"
+        content +="<style>figure{   width:33.3%;   float:left;   margin:0px;   text-align:center;  padding:0px;} </style>"
         for media in liked_media:
             content += "<figure>"
             filters.append(media.filter)
@@ -216,7 +221,7 @@ def myRecentLikes(): #written by Tim
                 content += ('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
                 #photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
             else:
-                content+= ("<img src=%s/>" % (media.get_thumbnail_url()))
+                content+= ("<img src=%s/>" % (media.get_low_resolution_url()))
                 content+= ("<figcaption>@%s" % (media.user.username))
                 content+= "</figcaption>"
                 #photos.append('<div class="floated_img"><img src="%s"/></div>' % (media.get_thumbnail_url()))
