@@ -7,6 +7,13 @@ To run it:
   * Download bottle if you don't already have it: pip install bottle
   * Download bottle-session if you don't already have it: pip install bottle-session
   * Download and run a redis instance on port 6379, here's their website http://redis.io
+  *     To do this:
+  *     1)   wget http://download.redis.io/releases/redis-stable.tar.gz
+  *     2)   tar xzf redis-stable.tar.gz
+  *     3)   cd redis-stable
+  *     4)   make test
+  *     5)   sudo make install
+  *     6)   redis-server
   * Run the file; it will host a local server on port 8515.
   * Visit http://localhost:8515 in a web browser
   *
@@ -93,7 +100,7 @@ def on_callback():
     return get_nav()
 
 @route('/myInfo')
-def myInfo():
+def myInfo(): #written by Tim
     content = "<h2>User's Information</h2>"
     access_token = request.session['access_token']
     if not access_token:
@@ -102,7 +109,6 @@ def myInfo():
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
         myUser =  api.user() #makes an API call
-        #myInformation = api.user_self() #makes another API call
 
         content += "<img src="+myUser.profile_picture+" alt='Profile Picture' >"
         content +="<p>Username : "+myUser.username+"</p>"
@@ -116,12 +122,13 @@ def myInfo():
 
 
 
+
     except Exception as e:
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 @route('/myFollowers')
-def myFollowers():
+def myFollowers(): #written by Tim
     content = "<h2>User's Followers</h2>"
     access_token = request.session['access_token']
     if not access_token:
@@ -158,35 +165,67 @@ def myRecentLikes(): #written by Tim
         print "Missing Access Token"
         return 'Missing Access Token'
     try:
-        print "in try..."
+
         api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
         _user_id =(api.user()).id
 
         liked_media, next = api.user_liked_media(count=10)
-        print "API call for 10 most recently liked media made successfully"
+
+        print "Webpage is loading...."
+
 
         counter = 0;
         photos = []
         filters = []
         usersThatLiked = []
+        '''
+        <div id="earlylife_images">
+            <figure>
+                <img src="images/early/moore01.jpg" alt="Roger Moore Teenage" width="150" height="150">
+                <figcaption>A young Roger Moore</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/early/moore02.jpg" alt="Roger Moore 30's" width="150" height="150">
+                <figcaption>Roger Moore in his 30's</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/early/moore03.jpg" alt="Roger Moore as James Bond" width="150" height="150">
+                <figcaption>Roger Moore as James Bond</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/early/moore04.jpg" alt="Roger Moore Recent" width="150" height="150">
+                <figcaption>Roger Moore in more recent years</figcaption>
+            </figure>
+
+            </div>
+        '''
+
+        content += "<div id='liked_media'>"
+        content +="<style>figure{   width:25%;   float:left;   margin:0px;   text-align:center;  padding:0px;} </style>"
         for media in liked_media:
+            content += "<figure>"
             filters.append(media.filter)
-            #usersThatLiked.extend(media.likes)
-            print media.id
             usersThatLiked.extend(api.media_likes(media_id = media.id))
-            print usersThatLiked
             counter = counter +1
 
-            photos.append('<div style="float:left;">')
+            #photos.append('<div style="float:left;">')
             if(media.type == 'video'):
-                content += " this is a video below"
-                photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
+                content += ('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
+                #photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
             else:
-                photos.append('<div class="floated_img"><img src="%s"/></div>' % (media.get_standard_resolution_url()))
+                content+= ("<img src=%s/>" % (media.get_thumbnail_url()))
+                content+= ("<figcaption>@%s" % (media.user.username))
+                content+= "</figcaption>"
+                #photos.append('<div class="floated_img"><img src="%s"/></div>' % (media.get_thumbnail_url()))
 
-        content += ''.join(photos) #display media
+            content+="</figure>"
 
-        #content += "<p> Count: "+str(counter)+"</p>"
+
+        content+= "</div><br>"
+
 
         filterCounter = Counter(filters) #makes a counter object based on the list of filters
         usersThatLikedCounter = Counter(usersThatLiked) #counts instances of any person liking the same pictures that the user did
@@ -197,14 +236,24 @@ def myRecentLikes(): #written by Tim
             content += "<li>" + filterWithCount[0] +"  ("+str(filterWithCount[1])+")</li>"
         content += "</ol>"
 
-        print usersThatLikedCounter
+        #gets a list of people that our user follows (used to make accurate suggestions of people to follow)
+        following_list, next_ = api.user_follows()
+
+        #make a set of user id numbers
+        following_ids = set()
+        for user in following_list:
+            following_ids.add(user.id)
+
+
         #outputs the most common users that liked the same media
-        content += "<h2> Top users that also liked these posts: </h2><ol>"
-        for userWithCount in usersThatLikedCounter.most_common(6):
+        content += "<h2> Top users that also liked these posts: </h2><p>Below is a list of users who also liked the posts above, if you are not already following them, there will be a link.<ol>"
+        for userWithCount in usersThatLikedCounter.most_common(11):
             if (userWithCount[0].id != _user_id): #makes sure that the current user is not displayed
                 content += "<li>" + userWithCount[0].username +"  ("+str(userWithCount[1])+" similar likes)"
-                content += ("    <a href='/user_follow/%s'>Follow</a>      Here's a link to their Instagram Profile:" % (userWithCount[0].id))
-                content += ("    <a href='https://www.instagram.com/%s'>instagram.com/%s</a></li>" % (userWithCount[0].username, userWithCount[0].username))
+                if(userWithCount[0].id not in following_ids):
+                    content += ("    <a href='/user_follow/%s'>Follow</a>" % (userWithCount[0].id))
+                content +=    (" <p>Here's a link to their Instagram Profile:" )
+                content += ("    <a href='https://www.instagram.com/%s'>instagram.com/%s</a></p></li>" % (userWithCount[0].username, userWithCount[0].username))
         content += "</ol>"
 
     except Exception as e:
@@ -214,9 +263,8 @@ def myRecentLikes(): #written by Tim
 
 
 @route('/user_follow/<id>')
-def user_follow(id):
+def user_follow(id): #written by Tim
     content = ""
-    print "in User_follow"
     access_token = request.session['access_token']
     if not access_token:
         print "Missing Access Token"
