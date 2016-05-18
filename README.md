@@ -20,7 +20,9 @@ To run it:
   *   python Submission3.py
   *
   * Visit http://localhost:8515 in a web browser
+  * click the button
   *
   * Login: as a user we created:
   *     Sandbox username: larrylarson353
   *             password: DrwnSurfz
+  *
