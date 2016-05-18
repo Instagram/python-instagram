@@ -9,18 +9,15 @@ class ApiModel(object):
         # make dict keys all strings
         if entry is None:
             return ""
-        #print "HERE"
-        #print entry
         entry_str_dict = dict([(str(key), value) for key, value in entry.items()])
-        #print "About to return"
         return cls(**entry_str_dict)
 
     def __repr__(self):
-        #return str(self)
-        if six.PY2:
-            return six.text_type(self).encode('utf8')
-        else:
-            return self.encode('utf8')
+        return str(self)
+        # if six.PY2:
+        #     return six.text_type(self).encode('utf8')
+        # else:
+        #     return self.encode('utf8')
 
     def __str__(self):
         if six.PY3:
@@ -93,16 +90,14 @@ class Media(ApiModel):
             new_media.user_has_liked = entry['user_has_liked']
         new_media.like_count = entry['likes']['count']
         new_media.likes = []
-
         if 'data' in entry['likes']:
             for like in entry['likes']['data']:
                 new_media.likes.append(User.object_from_dictionary(like))
 
-        if "data" in entry["comments"]:             #HERE was the line that needed to be inserted to fix the bug
-            new_media.comment_count = entry['comments']['count']
-            new_media.comments = []
-            for comment in entry['comments']['data']:
-                new_media.comments.append(Comment.object_from_dictionary(comment))
+        new_media.comment_count = entry['comments']['count']
+        new_media.comments = []
+        for comment in entry['comments']['data']:
+            new_media.comments.append(Comment.object_from_dictionary(comment))
 
         new_media.users_in_photo = []
         if entry.get('users_in_photo'):
@@ -196,7 +191,6 @@ class Location(ApiModel):
 
 
 class User(ApiModel):
-    #myEntryDictionary = model.entry_str_dict
 
     def __init__(self, id, *args, **kwargs):
         self.id = id
@@ -206,13 +200,8 @@ class User(ApiModel):
     def __unicode__(self):
         return "User: %s" % self.username
     def getName(self):
-        return self.username
-    def __hash__(self):
-        return int(self.id)
-    def __eq__(self, other):
-        return (self.id == other.id)
-    def __cmp__(self, other):
-        return (self.id == other.id)
+        return self.username;
+
 
 class Relationship(ApiModel):
 
