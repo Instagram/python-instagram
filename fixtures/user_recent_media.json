@@ -17,21 +17,7 @@
                 "name": null
             },
             "comments": {
-                "count": 1,
-                "data": [
-                    {
-                        "created_time": "1296713291",
-                        "text": "Earear",
-                        "from": {
-                            "username": "mikeyk",
-                            "first_name": "Mike",
-                            "last_name": "Krieger!!",
-                            "type": "user",
-                            "id": "4"
-                        },
-                        "id": "2611728"
-                    }
-                ]
+                "count": 0
             },
             "caption": {
                 "created_time": "1296713291",
