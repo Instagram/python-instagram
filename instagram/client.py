@@ -2,7 +2,7 @@ from . import oauth2
 from .bind import bind_method
 from .models import MediaShortcode, Media, User, Location, Tag, Comment, Relationship
 
-MEDIA_ACCEPT_PARAMETERS = ["count", "max_id"]
+MEDIA_ACCEPT_PARAMETERS = ["count"]
 SEARCH_ACCEPT_PARAMETERS = ["q", "count"]
 
 SUPPORTED_FORMATS = ['json']
@@ -28,10 +28,6 @@ class InstagramAPI(oauth2.OAuth2API):
             raise Exception("Unsupported format")
         super(InstagramAPI, self).__init__(**kwargs)
 
-    media_popular = bind_method(
-                path="/media/popular",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
-                root_class=Media)
 
     media_search = bind_method(
                 path="/media/search",
@@ -94,20 +90,20 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class=Media)
 
     user_media_feed = bind_method(
-                path="/users/self/feed",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
+                path="/users/self/media/recent",
+                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['min_id', 'max_id'],
                 root_class=Media,
                 paginates=True)
 
     user_liked_media = bind_method(
                 path="/users/self/media/liked",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
+                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['max_like_id'],
                 root_class=Media,
                 paginates=True)
 
     user_recent_media = bind_method(
                 path="/users/{user_id}/media/recent",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['user_id', 'min_id', 'max_timestamp', 'min_timestamp'],
+                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ['user_id', 'min_id', 'max_id'],
                 root_class=Media,
                 paginates=True)
 
@@ -117,14 +113,12 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class=User)
 
     user_follows = bind_method(
-                path="/users/{user_id}/follows",
-                accepts_parameters=["user_id"],
+                path="/users/self/follows",
                 paginates=True,
                 root_class=User)
 
     user_followed_by = bind_method(
-                path="/users/{user_id}/followed-by",
-                accepts_parameters=["user_id"],
+                path="/users/self/followed-by",
                 paginates=True,
                 root_class=User)
 
@@ -142,7 +136,7 @@ class InstagramAPI(oauth2.OAuth2API):
 
     location_search = bind_method(
                 path="/locations/search",
-                accepts_parameters=SEARCH_ACCEPT_PARAMETERS + ['lat', 'lng', 'foursquare_id', 'foursquare_v2_id'],
+                accepts_parameters=SEARCH_ACCEPT_PARAMETERS + ['lat', 'lng'],
                 root_class=Location)
 
     location = bind_method(
@@ -150,12 +144,6 @@ class InstagramAPI(oauth2.OAuth2API):
                 accepts_parameters=["location_id"],
                 root_class=Location,
                 response_type="entry")
-
-    geography_recent_media = bind_method(
-                path="/geographies/{geography_id}/media/recent",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS + ["geography_id"],
-                root_class=Media,
-                paginates=True)
 
     tag_recent_media = bind_method(
                 path="/tags/{tag_name}/media/recent",
@@ -198,6 +186,8 @@ class InstagramAPI(oauth2.OAuth2API):
                 requires_target_user=True,
                 response_type="entry")
 
+
+
     def _make_relationship_shortcut(action):
         def _inner(self, *args, **kwargs):
             return self.change_user_relationship(user_id=kwargs.get("user_id"),
@@ -216,9 +206,6 @@ class InstagramAPI(oauth2.OAuth2API):
                               "aspect",
                               "object_id",  # Optional if subscribing to all users
                               "callback_url",
-                              "lat",  # Geography
-                              "lng",  # Geography
-                              "radius",  # Geography
                               "verify_token"]
 
         if include:

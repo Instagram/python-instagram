@@ -17,21 +17,7 @@
             },
             "tags": [],
             "comments": {
-                "count": 1,
-                "data": [
-                    {
-                        "created_time": "1296272101",
-                        "text": "O hai.",
-                        "from": {
-                            "username": "mikeyk",
-                            "first_name": "Mike",
-                            "last_name": "Krieger!!",
-                            "type": "user",
-                            "id": "4"
-                        },
-                        "id": "2611719"
-                    }
-                ]
+                "count": 1
             },
             "caption": {
                 "created_time": "1296272101",
