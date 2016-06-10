@@ -1,7 +1,7 @@
 - - -
 
 **_This project is not actively maintained. Proceed at your own risk!_**
-
+**_Active Maintenance is now at https://github.com/Seraphicer/python-instagram_**
 - - - 
 
 [![Build Status](https://api.travis-ci.org/Instagram/python-instagram.svg)](https://travis-ci.org/Instagram/python-instagram)
