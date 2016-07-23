@@ -144,7 +144,7 @@ class OAuth2Request(object):
                                   self._signed_request(path, {}, include_signed_request, include_secret))
 
     def _full_url_with_params(self, path, params, include_secret=False, include_signed_request=True):
-        return (self._full_url(path, include_secret) + 
+        return (self._full_url(path, include_secret) +
                 self._full_query_with_params(params) +
                 self._signed_request(path, params, include_signed_request, include_secret))
 
@@ -234,5 +234,5 @@ class OAuth2Request(object):
             headers.update({"User-Agent": "%s Python Client" % self.api.api_name})
         # https://github.com/jcgregorio/httplib2/issues/173
         # bug in httplib2 w/ Python 3 and disable_ssl_certificate_validation=True
-        http_obj = Http() if six.PY3 else Http(disable_ssl_certificate_validation=True)        
+        http_obj = Http() if six.PY3 else Http(disable_ssl_certificate_validation=True)
         return http_obj.request(url, method, body=body, headers=headers)

@@ -1,4 +1,3 @@
-import urllib
 from .oauth2 import OAuth2Request
 import re
 from .json_import import simplejson
@@ -6,7 +5,6 @@ import hmac
 from hashlib import sha256
 import six
 from six.moves.urllib.parse import quote
-import sys
 
 re_path_template = re.compile('{\w+}')
 
@@ -113,7 +111,7 @@ def bind_method(**config):
             if self.pagination_format == 'dict':
                 return pagination
             raise Exception('Invalid value for pagination_format: %s' % self.pagination_format)
-          
+
         def _do_api_request(self, url, method="GET", body=None, headers=None):
             headers = headers or {}
             if self.signature and self.api.client_ips != None and self.api.client_secret != None:
@@ -137,8 +135,8 @@ def bind_method(**config):
                 raise InstagramAPIError(content_obj.get('code'), content_obj.get('error_type'), content_obj.get('error_message'))
             api_responses = []
             status_code = content_obj['meta']['code']
-            self.api.x_ratelimit_remaining = response.get("x-ratelimit-remaining",None)
-            self.api.x_ratelimit = response.get("x-ratelimit-limit",None)
+            self.api.x_ratelimit_remaining = response.get("x-ratelimit-remaining", None)
+            self.api.x_ratelimit = response.get("x-ratelimit-limit", None)
             if status_code == 200:
                 if not self.objectify_response:
                     return content_obj, None
