@@ -108,11 +108,15 @@ def bind_method(**config):
         def _build_pagination_info(self, content_obj):
             """Extract pagination information in the desired format."""
             pagination = content_obj.get('pagination', {})
-            if self.pagination_format == 'next_url':
-                return pagination.get('next_url')
             if self.pagination_format == 'dict':
                 return pagination
-            raise Exception('Invalid value for pagination_format: %s' % self.pagination_format)
+            else:
+                if 'min_tag_id' in pagination:
+                    return pagination.get('min_tag_id')
+                elif 'next_url' in pagination:
+                    return pagination.get('next_url')
+                else:
+                    return None
           
         def _do_api_request(self, url, method="GET", body=None, headers=None):
             headers = headers or {}
@@ -126,9 +130,13 @@ def bind_method(**config):
             if response['status'] == '503' or response['status'] == '429':
                 raise InstagramAPIError(response['status'], "Rate limited", "Your client is making too many request per second")
             try:
+                if isinstance(content, bytes):
+                    content = content.decode()
+
                 content_obj = simplejson.loads(content)
             except ValueError:
                 raise InstagramClientError('Unable to parse response, not valid JSON.', status_code=response['status'])
+
             # Handle OAuthRateLimitExceeded from Instagram's Nginx which uses different format to documented api responses
             if 'meta' not in content_obj:
                 if content_obj.get('code') == 420 or content_obj.get('code') == 429:

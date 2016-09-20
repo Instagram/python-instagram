@@ -45,7 +45,6 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class=MediaShortcode,
                 exclude_format=True)
 
-
     media_likes = bind_method(
                 path="/media/{media_id}/likes",
                 accepts_parameters=['media_id'],
@@ -159,7 +158,7 @@ class InstagramAPI(oauth2.OAuth2API):
 
     tag_recent_media = bind_method(
                 path="/tags/{tag_name}/media/recent",
-                accepts_parameters=['count', 'max_tag_id', 'tag_name'],
+                accepts_parameters=['count', 'tag_name', 'min_tag_id', 'max_tag_id'],
                 root_class=Media,
                 paginates=True)
 

@@ -3,3 +3,5 @@
 *.swp
 test_settings.py
 
+
+.idea
