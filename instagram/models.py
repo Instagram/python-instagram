@@ -118,6 +118,8 @@ class Media(ApiModel):
             for tag in entry['tags']:
                 new_media.tags.append(Tag.object_from_dictionary({'name': tag}))
 
+        new_media.type = entry.get('type')
+
         new_media.link = entry['link']
 
         new_media.filter = entry.get('filter')
