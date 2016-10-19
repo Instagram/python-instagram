@@ -246,6 +246,8 @@ authentication, subscriptions, and update processing. To try it out:
   * Run the file; it will host a local server on port 8515.
   * Try visiting http://localhost:8515 in your browser
 
+The sample app is also [available online](https://python-instagram.herokuapp.com)
+
 Contributing
 ------------
 In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
