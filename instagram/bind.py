@@ -125,6 +125,8 @@ def bind_method(**config):
             response, content = OAuth2Request(self.api).make_request(url, method=method, body=body, headers=headers)
             if response['status'] == '503' or response['status'] == '429':
                 raise InstagramAPIError(response['status'], "Rate limited", "Your client is making too many request per second")
+            elif response['status'] == '404':
+                return [], None  # No objects, and no pagination data.
             try:
                 content_obj = simplejson.loads(content)
             except ValueError:
