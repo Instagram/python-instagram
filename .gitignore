@@ -1,5 +1,5 @@
+.idea/
 *.pyc
 .DS_Store
 *.swp
 test_settings.py
-
