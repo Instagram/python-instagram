@@ -19,7 +19,7 @@ class OAuth2API(object):
     host = None
     base_path = None
     authorize_url = None
-    access_token_url = None
+    access_token_url = "https://api.instagram.com/oauth/access_token"
     redirect_uri = None
     # some providers use "oauth_token"
     access_token_field = "access_token"
