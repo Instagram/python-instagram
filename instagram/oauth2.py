@@ -124,9 +124,9 @@ class OAuth2Request(object):
     def _generate_sig(self, endpoint, params, secret):
         # handle unicode when signing, urlencode can't handle otherwise.
         def enc_if_str(p):
-            return p.encode('utf-8') if isinstance(p, unicode) else p
+            return p.encode('utf-8') if isinstance(p, basestring) else p
 
-        p = ''.join('|{}={}'.format(k, enc_if_str(params[k])) for k in sorted(params.keys()))
+        p = ''.join('|{}={}'.format(k, enc_if_str(v)) for k, v in sorted(params.items()) if k != 'sig')
         sig = '{}{}'.format(endpoint, p)
         return hmac.new(secret, sig, sha256).hexdigest()
 
