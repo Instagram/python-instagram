@@ -158,12 +158,12 @@ class OAuth2Request(object):
 
     def _auth_query(self, include_secret=False):
         if self.api.access_token:
-            return ("?%s=%s" % (self.api.access_token_field, self.api.access_token))
+            return ("?%s=%s" % (self.api.access_token_field, self.api.access_token)).encode()
         elif self.api.client_id:
             base = ("?client_id=%s" % (self.api.client_id))
             if include_secret:
                 base += "&client_secret=%s" % (self.api.client_secret)
-            return base
+            return base.encode()
 
     def _signed_request(self, path, params, include_signed_request, include_secret):
         if include_signed_request and self.api.client_secret is not None:
