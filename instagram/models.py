@@ -28,11 +28,11 @@ class ApiModel(object):
 
 class Image(ApiModel):
 
-    def __init__(self, url, width, height):
+    def __init__(self, url, width, height, **kwargs):
         self.url = url
         self.height = height
         self.width = width
-
+        
     def __unicode__(self):
         return "Image: %s" % self.url
 
@@ -96,7 +96,7 @@ class Media(ApiModel):
 
         new_media.comment_count = entry['comments']['count']
         new_media.comments = []
-        for comment in entry['comments']['data']:
+        for comment in entry['comments'].get('data', []):
             new_media.comments.append(Comment.object_from_dictionary(comment))
 
         new_media.users_in_photo = []
@@ -161,7 +161,7 @@ class Comment(ApiModel):
 
 
 class Point(ApiModel):
-    def __init__(self, latitude, longitude):
+    def __init__(self, latitude, longitude, **kwargs):
         self.latitude = latitude
         self.longitude = longitude
 
@@ -203,7 +203,7 @@ class User(ApiModel):
 
 class Relationship(ApiModel):
 
-    def __init__(self, incoming_status="none", outgoing_status="none", target_user_is_private=False):
+    def __init__(self, incoming_status="none", outgoing_status="none", target_user_is_private=False, **kwargs):
         self.incoming_status = incoming_status
         self.outgoing_status = outgoing_status
         self.target_user_is_private = target_user_is_private
@@ -216,7 +216,7 @@ class Relationship(ApiModel):
 
 
 class Position(ApiModel):
-    def __init__(self, x, y):
+    def __init__(self, x, y, **kwargs):
         self.x = x
         self.y = y
 
@@ -230,7 +230,7 @@ class Position(ApiModel):
 
 
 class UserInPhoto(ApiModel):
-    def __init__(self, user, position):
+    def __init__(self, user, position, **kwargs):
         self.position = position
         self.user = user
 
