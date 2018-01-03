@@ -94,7 +94,7 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class=Media)
 
     user_media_feed = bind_method(
-                path="/users/self/feed",
+                path="/users/self/media/recent",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
                 root_class=Media,
                 paginates=True)
