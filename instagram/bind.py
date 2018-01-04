@@ -39,6 +39,10 @@ class InstagramAPIError(Exception):
         return "(%s) %s-%s" % (self.status_code, self.error_type, self.error_message)
 
 
+class InstagramAPIRateLimitError(InstagramAPIError):
+    pass
+
+
 def bind_method(**config):
 
     class InstagramAPIMethod(object):
@@ -124,7 +128,8 @@ def bind_method(**config):
 
             response, content = OAuth2Request(self.api).make_request(url, method=method, body=body, headers=headers)
             if response['status'] == '503' or response['status'] == '429':
-                raise InstagramAPIError(response['status'], "Rate limited", "Your client is making too many request per second")
+                raise InstagramAPIRateLimitError(response['status'], "Rate limited",
+                        "Your client is making too many request per second")
             try:
                 content_obj = simplejson.loads(content)
             except ValueError:
@@ -133,7 +138,8 @@ def bind_method(**config):
             if 'meta' not in content_obj:
                 if content_obj.get('code') == 420 or content_obj.get('code') == 429:
                     error_message = content_obj.get('error_message') or "Your client is making too many request per second"
-                    raise InstagramAPIError(content_obj.get('code'), "Rate limited", error_message)
+                    raise InstagramAPIRateLimitError(content_obj.get('code'),
+                            "Rate limited", error_message)
                 raise InstagramAPIError(content_obj.get('code'), content_obj.get('error_type'), content_obj.get('error_message'))
             api_responses = []
             status_code = content_obj['meta']['code']
