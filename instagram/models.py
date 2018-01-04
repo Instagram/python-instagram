@@ -62,10 +62,8 @@ class Media(ApiModel):
         else:
             return self.videos['low_resolution'].url
 
-
     def get_thumbnail_url(self):
         return self.images['thumbnail'].url
-
 
     def __unicode__(self):
         return "Media: %s" % self.id
@@ -112,7 +110,7 @@ class Media(ApiModel):
         new_media.caption = None
         if entry['caption']:
             new_media.caption = Comment.object_from_dictionary(entry['caption'])
-        
+
         new_media.tags = []
         if entry['tags']:
             for tag in entry['tags']:

@@ -17,7 +17,7 @@ class InstagramAPI(oauth2.OAuth2API):
     access_token_url = "https://api.instagram.com/oauth/access_token"
     protocol = "https"
     api_name = "Instagram"
-    x_ratelimit_remaining  = None
+    x_ratelimit_remaining = None
     x_ratelimit = None
 
     def __init__(self, *args, **kwargs):
