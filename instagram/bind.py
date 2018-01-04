@@ -94,10 +94,16 @@ def bind_method(**config):
             for variable in re_path_template.findall(self.path):
                 name = variable.strip('{}')
 
-                try:
-                    value = quote(self.parameters[name])
-                except KeyError:
-                    raise Exception('No parameter value found for path variable: %s' % name)
+                if name == 'tag_name':
+                    # XXX: tags can have unicode (non-ascii) characters, but in order
+                    # to do the signature computation correctly, we must not urlencode
+                    # them.
+                    value = self.parameters[name]
+                else:
+                    try:
+                        value = quote(self.parameters[name])
+                    except KeyError:
+                        raise Exception('No parameter value found for path variable: %s' % name)
                 del self.parameters[name]
 
                 self.path = self.path.replace(variable, value)

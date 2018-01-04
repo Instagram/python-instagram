@@ -225,6 +225,24 @@ except InstagramAPIError as e:
       print "\nUser is set to private."
 ```
 
+Setting Timeouts
+------
+By default there is no timeout for requests to the Instagram API. You can specify a timeout in one of two ways:
+``` python
+from instagram.client import InstagramAPI
+
+# set a 30-second timeout for this particular InstagramAPI instance
+api = InstagramAPI(access_token=access_token, client_secret=client_secret, timeout=30)
+```
+or
+``` python
+import socket
+
+# Set the global default timeout, which applies to all sockets in your 
+# program where a timeout is not otherwise specified.
+socket.setdefaulttimeout(30)
+```
+
 Trouble Shooting
 ------
 
