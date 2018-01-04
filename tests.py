@@ -94,12 +94,9 @@ class InstagramAPITests(unittest.TestCase):
         self.client_only_api = TestInstagramAPI(client_id=client_id)
         self.api = TestInstagramAPI(access_token=access_token)
 
-    def test_media_popular(self):
-        self.api.media_popular(count=10)
-
     def test_media_search(self):
-        self.client_only_api.media_search(lat=37.7,lng=-122.22)
-        self.api.media_search(lat=37.7,lng=-122.22)
+        self.client_only_api.media_search(lat=37.7, lng=-122.22)
+        self.api.media_search(lat=37.7, lng=-122.22)
 
     def test_media_shortcode(self):
         self.client_only_api.media_shortcode('os1NQjxtvF')
@@ -242,9 +239,6 @@ class InstagramAPITests(unittest.TestCase):
         # test shortcuts as well
         self.api.follow_user(user_id='10')
         self.api.unfollow_user(user_id='10')
-
-    def test_geography_recent_media(self):
-        self.api.geography_recent_media(geography_id=1)
 
 if __name__ == '__main__':
     if not TEST_AUTH:
