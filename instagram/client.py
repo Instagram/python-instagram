@@ -70,7 +70,7 @@ class InstagramAPI(oauth2.OAuth2API):
                 method="POST",
                 signature=True,
                 accepts_parameters=['media_id', 'text'],
-                response_type="empty",
+                response_type="entry",
                 root_class=Comment)
 
     delete_comment = bind_method(

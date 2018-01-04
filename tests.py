@@ -246,6 +246,20 @@ class InstagramAPITests(unittest.TestCase):
     def test_geography_recent_media(self):
         self.api.geography_recent_media(geography_id=1)
 
+    def test_media(self):
+        recent, page=self.api.user_recent_media(user_id = 10, count = 10)
+        if not page is None:
+            temp, max_id = page.split('max_id=')
+            max_id = str(max_id)
+            counter = len(recent)
+            while page and counter < max_media:
+                more_recent, page = api.user_recent_media(user_id = 10, max_id = max_id, count = max_media-counter)
+                if not page is None:
+                    temp, max_id = page.split('max_id=')
+                for med in more_recent:
+                    recent.append(med)
+                counter = len(recent)
+
 if __name__ == '__main__':
     if not TEST_AUTH:
         del InstagramAuthTests
