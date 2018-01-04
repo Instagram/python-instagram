@@ -109,7 +109,8 @@ class OAuth2AuthExchangeRequest(object):
         data = self._data_for_exchange(code, username, password, scope=scope, user_id=user_id)
         http_object = Http(disable_ssl_certificate_validation=True)
         url = self.api.access_token_url
-        response, content = http_object.request(url, method="POST", body=data)
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        response, content = http_object.request(url, method="POST", body=data, headers=headers)
         parsed_content = simplejson.loads(content.decode())
         if int(response['status']) != 200:
             raise OAuth2AuthExchangeError(parsed_content.get("error_message", ""))
@@ -121,10 +122,13 @@ class OAuth2Request(object):
         self.api = api
 
     def _generate_sig(self, endpoint, params, secret):
-        sig = endpoint
-        for key in sorted(params.keys()):
-            sig += '|%s=%s' % (key, params[key])
-        return hmac.new(secret.encode(), sig.encode(), sha256).hexdigest()
+        # handle unicode when signing, urlencode can't handle otherwise.
+        def enc_if_str(p):
+            return p.encode('utf-8') if isinstance(p, unicode) else p
+
+        p = ''.join('|{}={}'.format(k, enc_if_str(params[k])) for k in sorted(params.keys()))
+        sig = '{}{}'.format(endpoint, p)
+        return hmac.new(secret, sig, sha256).hexdigest()
 
     def url_for_get(self, path, parameters):
         return self._full_url_with_params(path, parameters)
@@ -219,7 +223,7 @@ class OAuth2Request(object):
             if method == "POST":
                 body = self._post_body(params)
                 headers = {'Content-type': 'application/x-www-form-urlencoded'}
-                url = self._full_url(path, include_secret)
+                url = self._full_url_with_params(path, params, include_secret)
             else:
                 url = self._full_url_with_params(path, params, include_secret)
         else:

@@ -38,6 +38,11 @@ class Image(ApiModel):
 
 
 class Video(Image):
+    def __init__(self, url, width, height, id=None):
+        self.id = None
+        self.url = url
+        self.height = height
+        self.width = width
 
     def __unicode__(self):
         return "Video: %s" % self.url
@@ -83,7 +88,7 @@ class Media(ApiModel):
 
         if new_media.type == 'video':
             new_media.videos = {}
-            for version, version_info in six.iteritems(entry['videos']):
+            for version, version_info in six.iteritems(entry.get('videos', {})):
                 new_media.videos[version] = Video.object_from_dictionary(version_info)
 
         if 'user_has_liked' in entry:
@@ -96,7 +101,7 @@ class Media(ApiModel):
 
         new_media.comment_count = entry['comments']['count']
         new_media.comments = []
-        for comment in entry['comments']['data']:
+        for comment in entry['comments'].get('data', []):
             new_media.comments.append(Comment.object_from_dictionary(comment))
 
         new_media.users_in_photo = []
