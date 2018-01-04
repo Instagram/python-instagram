@@ -29,7 +29,7 @@ Our [developer site](http://instagram.com/developer) documents all the Instagram
 
 Blog
 ----------------------------
-The [Developer Blog] features news and important announcements about the Instagram Platform. You will also find tutorials and best practices to help you build great platform integrations. Make sure to subscribe to the RSS feed not to miss out on new posts: [http://developers.instagram.com](http://developers.instagram.com).
+The [Developer Blog](http://developers.instagram.com/) features news and important announcements about the Instagram Platform. You will also find tutorials and best practices to help you build great platform integrations. Make sure to subscribe to the RSS feed not to miss out on new posts: [http://developers.instagram.com](http://developers.instagram.com).
 
 
 Community
