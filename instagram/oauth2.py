@@ -124,7 +124,7 @@ class OAuth2Request(object):
         sig = endpoint
         for key in sorted(params.keys()):
             sig += '|%s=%s' % (key, params[key])
-        return hmac.new(secret.encode(), sig.encode(), sha256).hexdigest()
+        return hmac.new(secret.encode(), sig, sha256).hexdigest()
 
     def url_for_get(self, path, parameters):
         return self._full_url_with_params(path, parameters)
