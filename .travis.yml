@@ -7,4 +7,3 @@ python:
 install:
   - "pip install ."
 script: "python tests.py"
-
