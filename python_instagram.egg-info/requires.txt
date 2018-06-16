@@ -1,0 +1,2 @@
+simplejson
+httplib2

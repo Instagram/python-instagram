@@ -1,78 +1,161 @@
 {
     "pagination": {
-        "next_url": "http://localhost:8000/publicapi/v1/users/4/media/recent?q=iphone&lat=37.771&access_token=DEBUG&lng=-122.221&max_id=3382522&count=1", 
+        "next_url": "http://localhost:8000/publicapi/v1/users/4/media/recent?q=iphone&lat=37.771&access_token=DEBUG&lng=-122.221&max_id=3382522&count=1",
         "next_max_id": 3382522
-    }, 
+    },
     "meta": {
         "code": 200
-    }, 
+    },
     "data": [
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.781109999999998, 
-                "id": null, 
-                "longitude": -122.3947, 
+                "latitude": 37.781109999999998,
+                "id": null,
+                "longitude": -122.3947,
                 "name": null
-            }, 
+            },
             "comments": {
-                "count": 1, 
+                "count": 1,
                 "data": [
                     {
-                        "created_time": "1296713291", 
-                        "text": "Earear", 
+                        "created_time": "1296713291",
+                        "text": "Earear",
                         "from": {
-                            "username": "mikeyk", 
-                            "first_name": "Mike", 
-                            "last_name": "Krieger!!", 
-                            "type": "user", 
+                            "username": "mikeyk",
+                            "first_name": "Mike",
+                            "last_name": "Krieger!!",
+                            "type": "user",
                             "id": "4"
-                        }, 
+                        },
                         "id": "2611728"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1296713291", 
-                "text": "Earear", 
+                "created_time": "1296713291",
+                "text": "Earear",
                 "from": {
-                    "username": "mikeyk", 
-                    "first_name": "Mike", 
-                    "last_name": "Krieger!!", 
-                    "type": "user", 
+                    "username": "mikeyk",
+                    "first_name": "Mike",
+                    "last_name": "Krieger!!",
+                    "type": "user",
                     "id": "4"
-                }, 
+                },
                 "id": "2611728"
-            }, 
-            "link": "http://localhost:8000/p/M5z6/", 
+            },
+            "link": "http://localhost:8000/p/M5z6/",
             "likes": {
                 "count": 0
-            }, 
-            "created_time": "1296713289", 
+            },
+            "created_time": "1296713289",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2011/02/02/1ce5f3f490a640ca9068e6000c91adc5_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "3382522", 
+            },
+            "user_has_liked": false,
+            "id": "3382522",
             "user": {
-                "username": "mikeyk", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_4_75sq_1292324747_debug.jpg", 
+                "username": "mikeyk",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_4_75sq_1292324747_debug.jpg",
                 "id": "4"
             }
+        },
+        {
+            "type": "video",
+            "videos": {
+                "low_resolution": {
+                    "url": "http://distilleryvesper9-13.ak.instagram.com/090d06dad9cd11e2aa0912313817975d_102.mp4",
+                    "width": 480,
+                    "height": 480
+                },
+                "standard_resolution": {
+                    "url": "http://distilleryvesper9-13.ak.instagram.com/090d06dad9cd11e2aa0912313817975d_101.mp4",
+                    "width": 640,
+                    "height": 640
+                }},
+            "users_in_photo": null,
+            "filter": "Vesper",
+            "tags": [],
+            "comments": {
+                "data": [{
+                    "created_time": "1279332030",
+                    "text": "Love the sign here",
+                    "from": {
+                        "username": "mikeyk",
+                        "full_name": "Mikey Krieger",
+                        "id": "4",
+                        "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_1242695_75sq_1293915800.jpg"
+                    },
+                    "id": "8"
+                },
+                {
+                    "created_time": "1279341004",
+                    "text": "Chilako taco",
+                    "from": {
+                        "username": "kevin",
+                        "full_name": "Kevin S",
+                        "id": "3",
+                        "profile_picture": "..."
+                    },
+                    "id": "3"
+                }],
+                "count": 2
+            },
+            "caption": null,
+            "likes": {
+                "count": 1,
+                "data": [{
+                    "username": "mikeyk",
+                    "full_name": "Mikeyk",
+                    "id": "4",
+                    "profile_picture": "..."
+                }]
+            },
+            "link": "http://instagr.am/p/D/",
+            "user": {
+                "username": "kevin",
+                "full_name": "Kevin S",
+                "profile_picture": "...",
+                "bio": "...",
+                "website": "...",
+                "id": "3"
+            },
+            "created_time": "1279340983",
+            "images": {
+                "low_resolution": {
+                    "url": "http://distilleryimage2.ak.instagram.com/11f75f1cd9cc11e2a0fd22000aa8039a_6.jpg",
+                    "width": 306,
+                    "height": 306
+                },
+                "thumbnail": {
+                    "url": "http://distilleryimage2.ak.instagram.com/11f75f1cd9cc11e2a0fd22000aa8039a_5.jpg",
+                    "width": 150,
+                    "height": 150
+                },
+                "standard_resolution": {
+                    "url": "http://distilleryimage2.ak.instagram.com/11f75f1cd9cc11e2a0fd22000aa8039a_7.jpg",
+                    "width": 612,
+                    "height": 612
+                }
+            },
+            "id": "3",
+            "location": null
         }
+
     ]
 }
