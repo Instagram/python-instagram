@@ -1,0 +1,11 @@
+Every new app created on the instagram Platform starts in Sandbox mode.Apps in this mode can use any API endpoint but are restricted to a limited number of users and media.This is great for developing and testing your app.To go Live and fully access Instagram content,you will need to submit your application for review and approval.Once reviewed,you will only be able to request users the Permision Scopes for which your app was approved.Because of this,your application may not be able to use some API endpoints unless the corresponding permissions were reviewed and approved.The review process allows us to ensure an authentic and consistent experience for the Instagram Community.The app review process aims to help community members more granularly control how their content is being shared through 3rd party apps and that those apps are building compliant use case.
+
+Criteria for Review
+1.Brand and policy compliance
+-App must comply with Instagram Platform Policy   and Instagram Brand Guideliness.
+
+2.Submission quality
+-Notes must be clear,concise.We will not approve   submissions with insufficient notes.
+
+3.Video screencast quality
+-The video screencast must show the Instagram login experience of your app,proper credentials and the usage of every permission you are requesting.We will not approve submissions if you do not provide a clear and working screencast.

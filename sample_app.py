@@ -12,7 +12,7 @@ session_opts = {
 }
 
 app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts)
-
+#Dict the CONFIG
 CONFIG = {
     'client_id': '<client_id>',
     'client_secret': '<client_secret>',
@@ -30,7 +30,7 @@ def process_tag_update(update):
 
 reactor = subscriptions.SubscriptionsReactor()
 reactor.register_callback(subscriptions.SubscriptionType.TAG, process_tag_update)
-
+#Define and access a route for url ending with '/'  
 @route('/')
 def home():
     try:

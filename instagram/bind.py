@@ -10,12 +10,12 @@ import sys
 
 re_path_template = re.compile('{\w+}')
 
-
+#create a function
 def encode_string(value):
     return value.encode('utf-8') \
         if isinstance(value, six.text_type) else str(value)
 
-
+#create a InstagramClientError class
 class InstagramClientError(Exception):
     def __init__(self, error_message, status_code=None):
         self.status_code = status_code
@@ -161,7 +161,7 @@ def bind_method(**config):
                 return api_responses, self._build_pagination_info(content_obj)
             else:
                 raise InstagramAPIError(status_code, content_obj['meta']['error_type'], content_obj['meta']['error_message'])
-
+        #GET to get list of all resources and information about them
         def _paginator_with_url(self, url, method="GET", body=None, headers=None):
             headers = headers or {}
             pages_read = 0
