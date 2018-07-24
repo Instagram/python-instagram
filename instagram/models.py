@@ -1,7 +1,7 @@
 from .helper import timestamp_to_datetime
 import six
 
-
+#create class
 class ApiModel(object):
 
     @classmethod
@@ -44,12 +44,12 @@ class Video(Image):
 
 
 class Media(ApiModel):
-
+    
     def __init__(self, id=None, **kwargs):
         self.id = id
         for key, value in six.iteritems(kwargs):
             setattr(self, key, value)
-
+    #create and define functions
     def get_standard_resolution_url(self):
         if self.type == 'image':
             return self.images['standard_resolution'].url

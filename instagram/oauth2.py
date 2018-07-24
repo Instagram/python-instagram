@@ -54,9 +54,7 @@ class OAuth2API(object):
     def exchange_xauth_login_for_access_token(self, username, password, scope=None):
         """ scope should be a tuple or list of requested scope access levels """
         req = OAuth2AuthExchangeRequest(self)
-        return req.exchange_for_access_token(username=username, password=password,
-                                             scope=scope)
-
+        return req.exchange_for_access_token(username=username, password=password,scope=scope)
 
 class OAuth2AuthExchangeRequest(object):
     def __init__(self, api):
@@ -72,7 +70,7 @@ class OAuth2AuthExchangeRequest(object):
             client_params.update(scope=' '.join(scope))
         url_params = urlencode(client_params)
         return "%s?%s" % (self.api.authorize_url, url_params)
-
+    #Dict client_params
     def _data_for_exchange(self, code=None, username=None, password=None, scope=None, user_id=None):
         client_params = {
             "client_id": self.api.client_id,
@@ -115,7 +113,6 @@ class OAuth2AuthExchangeRequest(object):
             raise OAuth2AuthExchangeError(parsed_content.get("error_message", ""))
         return parsed_content['access_token'], parsed_content['user']
 
-
 class OAuth2Request(object):
     def __init__(self, api):
         self.api = api
@@ -128,10 +125,10 @@ class OAuth2Request(object):
 
     def url_for_get(self, path, parameters):
         return self._full_url_with_params(path, parameters)
-
+    #GET to get list and informations of resources
     def get_request(self, path, **kwargs):
         return self.make_request(self.prepare_request("GET", path, kwargs))
-
+    #POST to create new resources
     def post_request(self, path, **kwargs):
         return self.make_request(self.prepare_request("POST", path, kwargs))
 
@@ -227,7 +224,7 @@ class OAuth2Request(object):
             url = self._full_url(path)
 
         return url, method, body, headers
-
+    #GET used to get information of resource
     def make_request(self, url, method="GET", body=None, headers=None):
         headers = headers or {}
         if not 'User-Agent' in headers:

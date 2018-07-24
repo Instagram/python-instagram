@@ -1,4 +1,7 @@
 setup.py
+tests.py
+sample_app.py
+get_access_token.py
 instagram/__init__.py
 instagram/bind.py
 instagram/client.py

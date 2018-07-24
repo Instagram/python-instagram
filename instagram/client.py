@@ -234,7 +234,7 @@ class InstagramAPI(oauth2.OAuth2API):
             objectify_response=False,
             signature=signature,
         )
-
+#POST to create new subscription,DELETE to remove subscription,GET to get resources list
     create_subscription = _make_subscription_action('POST')
     list_subscriptions = _make_subscription_action('GET')
     delete_subscriptions = _make_subscription_action('DELETE', exclude=['object_id'], include=['id'])
