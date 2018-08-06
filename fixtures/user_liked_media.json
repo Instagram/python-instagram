@@ -1,7 +1,7 @@
 {
     "pagination": {
         "next_url": "http://localhost:8000/publicapi/v1/users/self/feed?q=iphone&lat=37.771&access_token=DEBUG&lng=-122.221&max_id=3382520",
-        "next_max_id": 3382520
+        "next_max_like_id": 50
     },
     "meta": {
         "code": 200
@@ -9,13 +9,13 @@
     "data": [
         {
             "type": "image",
+            "tags": [],
             "location": {
                 "latitude": 37.781089999999999,
                 "id": null,
                 "longitude": -122.3946,
                 "name": null
             },
-            "tags": [],
             "comments": {
                 "count": 1,
                 "data": [
@@ -77,3 +77,4 @@
         }
     ]
 }
+
