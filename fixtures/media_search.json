@@ -1,589 +1,597 @@
 {
     "meta": {
         "code": 200
-    }, 
+    },
     "data": [
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775382999999991, 
-                "id": "74480", 
-                "longitude": -122.223941, 
+                "latitude": 37.775382999999991,
+                "id": "74480",
+                "longitude": -122.223941,
                 "name": "Fruitvale BART"
-            }, 
+            },
             "comments": {
-                "count": 1, 
+                "count": 1,
                 "data": [
                     {
-                        "created_time": "1288931764", 
-                        "text": "Emergency", 
+                        "created_time": "1288931764",
+                        "text": "Emergency",
                         "from": {
-                            "username": "catchfoot", 
-                            "first_name": "Rachel", 
-                            "last_name": "Lightfoot", 
-                            "type": "user", 
+                            "username": "catchfoot",
+                            "first_name": "Rachel",
+                            "last_name": "Lightfoot",
+                            "type": "user",
                             "id": "208329"
-                        }, 
+                        },
                         "id": "1916879"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1288931764", 
-                "text": "Emergency", 
+                "created_time": "1288931764",
+                "text": "Emergency",
                 "from": {
-                    "username": "catchfoot", 
-                    "first_name": "Rachel", 
-                    "last_name": "Lightfoot", 
-                    "type": "user", 
+                    "username": "catchfoot",
+                    "first_name": "Rachel",
+                    "last_name": "Lightfoot",
+                    "type": "user",
                     "id": "208329"
-                }, 
+                },
                 "id": "1916879"
-            }, 
-            "link": "http://localhost:8000/p/J2aL/", 
+            },
+            "link": "http://localhost:8000/p/J2aL/",
             "likes": {
                 "count": 0
-            }, 
-            "created_time": "1288931757", 
+            },
+            "created_time": "1288931757",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/04/486c002f2fd14e2f8a1aef99dee7b95d_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/04/486c002f2fd14e2f8a1aef99dee7b95d_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/04/486c002f2fd14e2f8a1aef99dee7b95d_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/04/486c002f2fd14e2f8a1aef99dee7b95d_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/04/486c002f2fd14e2f8a1aef99dee7b95d_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/04/486c002f2fd14e2f8a1aef99dee7b95d_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "2582155", 
+            },
+            "user_has_liked": false,
+            "id": "2582155",
             "user": {
-                "username": "catchfoot", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_208329_75sq_1288164413.jpg", 
+                "username": "catchfoot",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_208329_75sq_1288164413.jpg",
                 "id": "208329"
             }
-        }, 
+        },
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775289999999998, 
-                "id": "163042", 
-                "longitude": -122.224172, 
+                "latitude": 37.775289999999998,
+                "id": "163042",
+                "longitude": -122.224172,
                 "name": "Powderface"
-            }, 
+            },
             "comments": {
-                "count": 1, 
+                "count": 1,
                 "data": [
                     {
-                        "created_time": "1288644742", 
-                        "text": "Caramel Beignets! Yummy :)", 
+                        "created_time": "1288644742",
+                        "text": "Caramel Beignets! Yummy :)",
                         "from": {
-                            "username": "mkram0s", 
-                            "first_name": "Kate", 
-                            "last_name": "Ramos", 
-                            "type": "user", 
+                            "username": "mkram0s",
+                            "first_name": "Kate",
+                            "last_name": "Ramos",
+                            "type": "user",
                             "id": "305504"
-                        }, 
+                        },
                         "id": "1494733"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1288644742", 
-                "text": "Caramel Beignets! Yummy :)", 
+                "created_time": "1288644742",
+                "text": "Caramel Beignets! Yummy :)",
                 "from": {
-                    "username": "mkram0s", 
-                    "first_name": "Kate", 
-                    "last_name": "Ramos", 
-                    "type": "user", 
+                    "username": "mkram0s",
+                    "first_name": "Kate",
+                    "last_name": "Ramos",
+                    "type": "user",
                     "id": "305504"
-                }, 
+                },
                 "id": "1494733"
-            }, 
-            "link": "http://localhost:8000/p/H9R_/", 
+            },
+            "link": "http://localhost:8000/p/H9R_/",
             "likes": {
                 "count": 0
-            }, 
-            "created_time": "1288644633", 
+            },
+            "created_time": "1288644633",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/01/7a74951a954a44619b5b2afb64a7b17d_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/01/7a74951a954a44619b5b2afb64a7b17d_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/01/7a74951a954a44619b5b2afb64a7b17d_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/01/7a74951a954a44619b5b2afb64a7b17d_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/01/7a74951a954a44619b5b2afb64a7b17d_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/11/01/7a74951a954a44619b5b2afb64a7b17d_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "2086015", 
+            },
+            "user_has_liked": false,
+            "id": "2086015",
             "user": {
-                "username": "mkram0s", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_305504_75sq_1288204024.jpg", 
+                "username": "mkram0s",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_305504_75sq_1288204024.jpg",
                 "id": "305504"
             }
-        }, 
+        },
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775382999999991, 
-                "id": "74480", 
-                "longitude": -122.223941, 
+                "latitude": 37.775382999999991,
+                "id": "74480",
+                "longitude": -122.223941,
                 "name": "Fruitvale BART"
-            }, 
+            },
             "comments": {
-                "count": 1, 
+                "count": 1,
                 "data": [
                     {
-                        "created_time": "1288232768", 
-                        "text": "Bored on Bart ", 
+                        "created_time": "1288232768",
+                        "text": "Bored on Bart ",
                         "from": {
-                            "username": "hannahc", 
-                            "first_name": "Hannah", 
-                            "last_name": "Coughlin ", 
-                            "type": "user", 
+                            "username": "hannahc",
+                            "first_name": "Hannah",
+                            "last_name": "Coughlin ",
+                            "type": "user",
                             "id": "304020"
-                        }, 
+                        },
                         "id": "1030446"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1288232768", 
-                "text": "Bored on Bart ", 
+                "created_time": "1288232768",
+                "text": "Bored on Bart ",
                 "from": {
-                    "username": "hannahc", 
-                    "first_name": "Hannah", 
-                    "last_name": "Coughlin ", 
-                    "type": "user", 
+                    "username": "hannahc",
+                    "first_name": "Hannah",
+                    "last_name": "Coughlin ",
+                    "type": "user",
                     "id": "304020"
-                }, 
+                },
                 "id": "1030446"
-            }, 
-            "link": "http://localhost:8000/p/Fm-m/", 
+            },
+            "link": "http://localhost:8000/p/Fm-m/",
             "likes": {
                 "count": 0
-            }, 
-            "created_time": "1288232753", 
+            },
+            "created_time": "1288232753",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/27/1406596f54be46b4a538dd1d4b4c6f1e_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/27/1406596f54be46b4a538dd1d4b4c6f1e_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/27/1406596f54be46b4a538dd1d4b4c6f1e_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/27/1406596f54be46b4a538dd1d4b4c6f1e_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/27/1406596f54be46b4a538dd1d4b4c6f1e_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/27/1406596f54be46b4a538dd1d4b4c6f1e_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "1470374", 
+            },
+            "user_has_liked": false,
+            "id": "1470374",
             "user": {
-                "username": "hannahc", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_304020_75sq_1288194960.jpg", 
+                "username": "hannahc",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_304020_75sq_1288194960.jpg",
                 "id": "304020"
             }
-        }, 
+        },
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775382999999991, 
-                "id": "74480", 
-                "longitude": -122.223941, 
+                "latitude": 37.775382999999991,
+                "id": "74480",
+                "longitude": -122.223941,
                 "name": "Fruitvale BART"
-            }, 
+            },
             "comments": {
-                "count": 1, 
+                "count": 1,
                 "data": [
                     {
-                        "created_time": "1288136425", 
-                        "text": "Emergency", 
+                        "created_time": "1288136425",
+                        "text": "Emergency",
                         "from": {
-                            "username": "rolliefingaz", 
-                            "first_name": "Gregory", 
-                            "last_name": "Hurcomb", 
-                            "type": "user", 
+                            "username": "rolliefingaz",
+                            "first_name": "Gregory",
+                            "last_name": "Hurcomb",
+                            "type": "user",
                             "id": "233618"
-                        }, 
+                        },
                         "id": "951869"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1288136425", 
-                "text": "Emergency", 
+                "created_time": "1288136425",
+                "text": "Emergency",
                 "from": {
-                    "username": "rolliefingaz", 
-                    "first_name": "Gregory", 
-                    "last_name": "Hurcomb", 
-                    "type": "user", 
+                    "username": "rolliefingaz",
+                    "first_name": "Gregory",
+                    "last_name": "Hurcomb",
+                    "type": "user",
                     "id": "233618"
-                }, 
+                },
                 "id": "951869"
-            }, 
-            "link": "http://localhost:8000/p/FOZf/", 
+            },
+            "link": "http://localhost:8000/p/FOZf/",
             "likes": {
                 "count": 0
-            }, 
-            "created_time": "1288136246", 
+            },
+            "created_time": "1288136246",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/26/3459f1db2d6d422b950838715a04cb38_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/26/3459f1db2d6d422b950838715a04cb38_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/26/3459f1db2d6d422b950838715a04cb38_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/26/3459f1db2d6d422b950838715a04cb38_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/26/3459f1db2d6d422b950838715a04cb38_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/26/3459f1db2d6d422b950838715a04cb38_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "1369695", 
+            },
+            "user_has_liked": false,
+            "id": "1369695",
             "user": {
-                "username": "rolliefingaz", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_233618_75sq_1287785819.jpg", 
+                "username": "rolliefingaz",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_233618_75sq_1287785819.jpg",
                 "id": "233618"
             }
-        }, 
+        },
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775194499999998, 
-                "id": "101132", 
-                "longitude": -122.227087, 
+                "latitude": 37.775194499999998,
+                "id": "101132",
+                "longitude": -122.227087,
                 "name": "Guadalajara Mexican Cuisine and Bar"
-            }, 
+            },
             "comments": {
-                "count": 2, 
+                "count": 2,
                 "data": [
                     {
-                        "created_time": "1287969851", 
-                        "text": "Well hello there beautiful", 
+                        "created_time": "1287969851",
+                        "text": "Well hello there beautiful",
                         "from": {
-                            "username": "jorstaff", 
-                            "first_name": "Jordan", 
-                            "last_name": "Walker", 
-                            "type": "user", 
+                            "username": "jorstaff",
+                            "first_name": "Jordan",
+                            "last_name": "Walker",
+                            "type": "user",
                             "id": "154425"
-                        }, 
+                        },
                         "id": "818311"
-                    }, 
+                    },
                     {
-                        "created_time": "1288072257", 
-                        "text": "Text me next time. I live down the st and I'm ways down for tacos!!", 
+                        "created_time": "1288072257",
+                        "text": "Text me next time. I live down the st and I'm ways down for tacos!!",
                         "from": {
-                            "username": "melisaarreguin", 
-                            "first_name": "Melisa", 
-                            "last_name": "Arreguin", 
-                            "type": "user", 
+                            "username": "melisaarreguin",
+                            "first_name": "Melisa",
+                            "last_name": "Arreguin",
+                            "type": "user",
                             "id": "122725"
-                        }, 
+                        },
                         "id": "898954"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1287969851", 
-                "text": "Well hello there beautiful", 
+                "created_time": "1287969851",
+                "text": "Well hello there beautiful",
                 "from": {
-                    "username": "jorstaff", 
-                    "first_name": "Jordan", 
-                    "last_name": "Walker", 
-                    "type": "user", 
+                    "username": "jorstaff",
+                    "first_name": "Jordan",
+                    "last_name": "Walker",
+                    "type": "user",
                     "id": "154425"
-                }, 
+                },
                 "id": "818311"
-            }, 
-            "link": "http://localhost:8000/p/Ejh5/", 
+            },
+            "link": "http://localhost:8000/p/Ejh5/",
             "likes": {
                 "count": 1
-            }, 
-            "created_time": "1287969827", 
+            },
+            "created_time": "1287969827",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/24/8a466d809fe442a1a2df024543ae25e8_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/24/8a466d809fe442a1a2df024543ae25e8_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/24/8a466d809fe442a1a2df024543ae25e8_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/24/8a466d809fe442a1a2df024543ae25e8_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/24/8a466d809fe442a1a2df024543ae25e8_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/24/8a466d809fe442a1a2df024543ae25e8_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "1194105", 
+            },
+            "user_has_liked": false,
+            "id": "1194105",
             "user": {
-                "username": "jorstaff", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_154425_75sq_1287413622.jpg", 
+                "username": "jorstaff",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_154425_75sq_1287413622.jpg",
                 "id": "154425"
             }
-        }, 
+        },
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775382999999991, 
-                "id": "74480", 
-                "longitude": -122.223941, 
+                "latitude": 37.775382999999991,
+                "id": "74480",
+                "longitude": -122.223941,
                 "name": "Fruitvale BART"
-            }, 
+            },
             "comments": {
-                "count": 1, 
+                "count": 1,
                 "data": [
                     {
-                        "created_time": "1287674437", 
-                        "text": "Morning commute", 
+                        "created_time": "1287674437",
+                        "text": "Morning commute",
                         "from": {
-                            "username": "catchfoot", 
-                            "first_name": "Rachel", 
-                            "last_name": "Lightfoot", 
-                            "type": "user", 
+                            "username": "catchfoot",
+                            "first_name": "Rachel",
+                            "last_name": "Lightfoot",
+                            "type": "user",
                             "id": "208329"
-                        }, 
+                        },
                         "id": "555932"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1287674437", 
-                "text": "Morning commute", 
+                "created_time": "1287674437",
+                "text": "Morning commute",
                 "from": {
-                    "username": "catchfoot", 
-                    "first_name": "Rachel", 
-                    "last_name": "Lightfoot", 
-                    "type": "user", 
+                    "username": "catchfoot",
+                    "first_name": "Rachel",
+                    "last_name": "Lightfoot",
+                    "type": "user",
                     "id": "208329"
-                }, 
+                },
                 "id": "555932"
-            }, 
-            "link": "http://localhost:8000/p/DMl1/", 
+            },
+            "link": "http://localhost:8000/p/DMl1/",
             "likes": {
                 "count": 0
-            }, 
-            "created_time": "1287674360", 
+            },
+            "created_time": "1287674360",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/21/d9949ca81cb540d798acee59ea94223a_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/21/d9949ca81cb540d798acee59ea94223a_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/21/d9949ca81cb540d798acee59ea94223a_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/21/d9949ca81cb540d798acee59ea94223a_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/21/d9949ca81cb540d798acee59ea94223a_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/21/d9949ca81cb540d798acee59ea94223a_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "838005", 
+            },
+            "user_has_liked": false,
+            "id": "838005",
             "user": {
-                "username": "catchfoot", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_208329_75sq_1288164413.jpg", 
+                "username": "catchfoot",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_208329_75sq_1288164413.jpg",
                 "id": "208329"
             }
-        }, 
+        },
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775180799999987, 
-                "id": "68841", 
-                "longitude": -122.2270716, 
+                "latitude": 37.775180799999987,
+                "id": "68841",
+                "longitude": -122.2270716,
                 "name": "El Novillo Taco Truck"
-            }, 
+            },
             "comments": {
-                "count": 4, 
+                "count": 4,
                 "data": [
                     {
-                        "created_time": "1287585720", 
-                        "text": "Carne Asasa Torta. No Onions. ", 
+                        "created_time": "1287585720",
+                        "text": "Carne Asasa Torta. No Onions. ",
                         "from": {
-                            "username": "darodriguez", 
-                            "first_name": "David", 
-                            "last_name": "Rodriguez", 
-                            "type": "user", 
+                            "username": "darodriguez",
+                            "first_name": "David",
+                            "last_name": "Rodriguez",
+                            "type": "user",
                             "id": "113603"
-                        }, 
+                        },
                         "id": "495555"
-                    }, 
+                    },
                     {
-                        "created_time": "1287585854", 
-                        "text": "Hey, I wanted onions. :(", 
+                        "created_time": "1287585854",
+                        "text": "Hey, I wanted onions. :(",
                         "from": {
-                            "username": "melisaarreguin", 
-                            "first_name": "Melisa", 
-                            "last_name": "Arreguin", 
-                            "type": "user", 
+                            "username": "melisaarreguin",
+                            "first_name": "Melisa",
+                            "last_name": "Arreguin",
+                            "type": "user",
                             "id": "122725"
-                        }, 
+                        },
                         "id": "495675"
-                    }, 
+                    },
                     {
-                        "created_time": "1287603871", 
-                        "text": "You got onions. You had the al pastor, remember!?", 
+                        "created_time": "1287603871",
+                        "text": "You got onions. You had the al pastor, remember!?",
                         "from": {
-                            "username": "darodriguez", 
-                            "first_name": "David", 
-                            "last_name": "Rodriguez", 
-                            "type": "user", 
+                            "username": "darodriguez",
+                            "first_name": "David",
+                            "last_name": "Rodriguez",
+                            "type": "user",
                             "id": "113603"
-                        }, 
+                        },
                         "id": "507172"
-                    }, 
+                    },
                     {
-                        "created_time": "1287606841", 
-                        "text": "Oh shiiiit this would have taken everything to the next level", 
+                        "created_time": "1287606841",
+                        "text": "Oh shiiiit this would have taken everything to the next level",
                         "from": {
-                            "username": "jorstaff", 
-                            "first_name": "Jordan", 
-                            "last_name": "Walker", 
-                            "type": "user", 
+                            "username": "jorstaff",
+                            "first_name": "Jordan",
+                            "last_name": "Walker",
+                            "type": "user",
                             "id": "154425"
-                        }, 
+                        },
                         "id": "508433"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1287585720", 
-                "text": "Carne Asasa Torta. No Onions. ", 
+                "created_time": "1287585720",
+                "text": "Carne Asasa Torta. No Onions. ",
                 "from": {
-                    "username": "darodriguez", 
-                    "first_name": "David", 
-                    "last_name": "Rodriguez", 
-                    "type": "user", 
+                    "username": "darodriguez",
+                    "first_name": "David",
+                    "last_name": "Rodriguez",
+                    "type": "user",
                     "id": "113603"
-                }, 
+                },
                 "id": "495555"
-            }, 
-            "link": "http://localhost:8000/p/C5cU/", 
+            },
+            "link": "http://localhost:8000/p/C5cU/",
             "likes": {
                 "count": 1
-            }, 
-            "created_time": "1287585671", 
+            },
+            "created_time": "1287585671",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/ad6e8429c40c40ffabe0813ba302a479_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/ad6e8429c40c40ffabe0813ba302a479_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/ad6e8429c40c40ffabe0813ba302a479_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/ad6e8429c40c40ffabe0813ba302a479_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/ad6e8429c40c40ffabe0813ba302a479_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/ad6e8429c40c40ffabe0813ba302a479_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "759572", 
+            },
+            "user_has_liked": false,
+            "id": "759572",
             "user": {
-                "username": "darodriguez", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_113603_75sq_1287035206.jpg", 
+                "username": "darodriguez",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_113603_75sq_1287035206.jpg",
                 "id": "113603"
             }
-        }, 
+        },
         {
-            "type": "image", 
+            "type": "image",
+            "tags": [],
             "location": {
-                "latitude": 37.775180799999987, 
-                "id": "68841", 
-                "longitude": -122.2270716, 
+                "latitude": 37.775180799999987,
+                "id": "68841",
+                "longitude": -122.2270716,
                 "name": "El Novillo Taco Truck"
-            }, 
+            },
             "comments": {
-                "count": 1, 
+                "count": 1,
                 "data": [
                     {
-                        "created_time": "1287585453", 
-                        "text": "Tortas. ", 
+                        "created_time": "1287585453",
+                        "text": "Tortas. ",
                         "from": {
-                            "username": "darodriguez", 
-                            "first_name": "David", 
-                            "last_name": "Rodriguez", 
-                            "type": "user", 
+                            "username": "darodriguez",
+                            "first_name": "David",
+                            "last_name": "Rodriguez",
+                            "type": "user",
                             "id": "113603"
-                        }, 
+                        },
                         "id": "495311"
                     }
                 ]
-            }, 
+            },
             "caption": {
-                "created_time": "1287585453", 
-                "text": "Tortas. ", 
+                "created_time": "1287585453",
+                "text": "Tortas. ",
                 "from": {
-                    "username": "darodriguez", 
-                    "first_name": "David", 
-                    "last_name": "Rodriguez", 
-                    "type": "user", 
+                    "username": "darodriguez",
+                    "first_name": "David",
+                    "last_name": "Rodriguez",
+                    "type": "user",
                     "id": "113603"
-                }, 
+                },
                 "id": "495311"
-            }, 
-            "link": "http://localhost:8000/p/C5Wr/", 
+            },
+            "link": "http://localhost:8000/p/C5Wr/",
             "likes": {
                 "count": 0
-            }, 
-            "created_time": "1287585407", 
+            },
+            "created_time": "1287585407",
             "images": {
                 "low_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/1fde15405b6349ef949c9a8f5498868e_6.jpg", 
-                    "width": 480, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/1fde15405b6349ef949c9a8f5498868e_6.jpg",
+                    "width": 480,
                     "height": 480
-                }, 
+                },
                 "thumbnail": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/1fde15405b6349ef949c9a8f5498868e_5.jpg", 
-                    "width": 150, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/1fde15405b6349ef949c9a8f5498868e_5.jpg",
+                    "width": 150,
                     "height": 150
-                }, 
+                },
                 "standard_resolution": {
-                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/1fde15405b6349ef949c9a8f5498868e_7.jpg", 
-                    "width": 612, 
+                    "url": "http://distillery-dev.s3.amazonaws.com/media/2010/10/20/1fde15405b6349ef949c9a8f5498868e_7.jpg",
+                    "width": 612,
                     "height": 612
                 }
-            }, 
-            "user_has_liked": false, 
-            "id": "759211", 
+            },
+            "user_has_liked": false,
+            "id": "759211",
             "user": {
-                "username": "darodriguez", 
-                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_113603_75sq_1287035206.jpg", 
+                "username": "darodriguez",
+                "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_113603_75sq_1287035206.jpg",
                 "id": "113603"
             }
         }

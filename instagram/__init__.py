@@ -1,2 +1,2 @@
-from bind import InstagramAPIError, InstagramClientError
-from client import InstagramAPI
+from .bind import InstagramAPIError, InstagramClientError
+from .client import InstagramAPI

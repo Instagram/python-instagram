@@ -1,0 +1,15 @@
+{
+    "pagination": {
+    }, 
+    "meta": {
+        "code": 200
+    }, 
+    "data": [
+        {
+            "username": "kevin", 
+            "profile_picture": "http://distillery.s3.amazonaws.com/profiles/profile_3_75sq_1295493319_debug.jpg", 
+            "id": "3"
+        } 
+    ]
+}
+
