@@ -51,6 +51,7 @@ It will prompt you for your app's Client ID, Client Secret, and Redirect URI, an
 ### Authenticating a user
 
 The provided sample app shows a simple OAuth flow for authenticating a user and getting an access token for them.
+For security reasons, it is recommended not to write sensitive information in the code. They could be instead be stored in a separate file (i.e. one per line).
 
 ### Using an access token
 
@@ -59,8 +60,9 @@ Once you have an access token (whether via the script or from the user flow), yo
 ``` python
 from instagram.client import InstagramAPI
 
-access_token = "YOUR_ACCESS_TOKEN"
-client_secret = "YOUR_CLIENT_SECRET"
+with open("login_credentials.txt", "r") as f:
+   access_token = f.readline()
+   client_secret = f.readline()
 api = InstagramAPI(access_token=access_token, client_secret=client_secret)
 recent_media, next_ = api.user_recent_media(user_id="userid", count=10)
 for media in recent_media:
@@ -73,7 +75,10 @@ For methods that don't require authentication, you can just pass your client ID 
 constructor:
 
 ``` python
-api = InstagramAPI(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
+with open("client_credentials.txt", "r") as f:
+   c_id = f.readline()
+   c_secret = f.readline()
+api = InstagramAPI(client_id=c_id, client_secret=c_secret)
 popular_media = api.media_popular(count=20)
 for media in popular_media:
     print media.images['standard_resolution'].url
