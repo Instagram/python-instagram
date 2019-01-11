@@ -4,41 +4,51 @@
 
 - - - 
 
-[![Build Status](https://api.travis-ci.org/Instagram/python-instagram.svg)](https://travis-ci.org/Instagram/python-instagram)
+[![Build Status](https://api.travis-ci.org/wkoot/python-instagram.svg)](https://travis-ci.org/wkoot/python-instagram)
+[![Coveralls Coverage](https://coveralls.io/repos/github/wkoot/python-instagram/badge.svg)](https://coveralls.io/github/wkoot/python-instagram)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6dd0431b8752421d95521ea59fc6ecc1)](https://www.codacy.com/app/wkoot/python-instagram)
+[![Code Climate](https://img.shields.io/codeclimate/github/wkoot/python-instagram.svg)](https://codeclimate.com/github/wkoot/python-instagram)
+
 
 python-instagram
-======
+================
 A Python 2/3 client for the Instagram REST and Search APIs
 
+
 Installation
------
+------------
 ```
-pip install python-instagram
+pip install instagram
 ```
-Requires
------
+
+
+Requirements
+------------
   * httplib2
   * simplejson
   * six
+  * pytz
 
 
 Instagram REST and Search APIs
 ------------------------------
-Our [developer site](http://instagram.com/developer) documents all the Instagram REST and Search APIs.
+The [Instagram developer page](http://instagram.com/developer) supposedly documents all the Instagram REST and Search APIs.
 
 
-Blog
-----------------------------
-The [Developer Blog] features news and important announcements about the Instagram Platform. You will also find tutorials and best practices to help you build great platform integrations. Make sure to subscribe to the RSS feed not to miss out on new posts: [http://developers.instagram.com](http://developers.instagram.com).
+Instagram for developers blog
+-----------------------------
+The [Instagram for developers blog](http://developers.instagram.com/) features news and important announcements about the Instagram Platform.  
+You will also find tutorials and best practices to help you build great platform integrations.
 
 
-Community
-----------------------
-The [Stack Overflow community](http://stackoverflow.com/questions/tagged/instagram/) is a great place to ask API related questions or if you need help with your code. Make sure to tag your questions with the Instagram tag to get fast answers from other fellow developers and members of the Instagram team.
+Stack Overflow community
+------------------------
+The Stack Overflow [instagram tag](http://stackoverflow.com/questions/tagged/instagram/) is a great place to ask API related questions or if you need help with your code.  
+Make sure to tag your questions with the Instagram tag to get fast answers from other fellow developers and members of the Instagram team.
 
 
 Authentication
------
+--------------
 
 Instagram API uses the OAuth2 protocol for authentication, but not all functionality requires authentication.
 See the docs for more information: http://instagram.com/developer/authentication/
@@ -66,7 +76,7 @@ recent_media, next_ = api.user_recent_media(user_id="userid", count=10)
 for media in recent_media:
    print media.caption.text
 ```
-       
+
 ### Making unauthenticated requests
 
 For methods that don't require authentication, you can just pass your client ID and optionally client secret into the InstagramAPI 
@@ -79,8 +89,9 @@ for media in popular_media:
     print media.images['standard_resolution'].url
 ```
 
-Real-time Subscriptions:
------
+
+Real-time Subscriptions
+-----------------------
 
 See the docs for more on real-time subscriptions: http://instagr.am/developer/realtime/
 
@@ -107,7 +118,7 @@ Along with that, you would typically register subscription "reactors" for proces
 reactor = subscriptions.SubscriptionsReactor()
 reactor.register_callback(subscriptions.SubscriptionType.USER, process_user_update)
 ```
-    
+
 See the provided sample app for an example of making a subscription, reacting to it, an processing the updates.
 
 You can also use the API to list and delete subscriptions:
@@ -116,10 +127,10 @@ You can also use the API to list and delete subscriptions:
 api.list_subscriptions()
 api.delete_subscriptions(id=342342)
 ```
-   
 
-Data Retrieval:
------
+
+Data Retrieval
+--------------
 
 See the endpoints docs for more on these methods: http://instagr.am/developer/endpoints/
 
@@ -142,7 +153,7 @@ while next_:
 ```
 
 Users: http://instagr.am/developer/endpoints/users/
-    
+
 ``` python
 api.user(user_id)
 api.user_media_feed()*
@@ -150,7 +161,7 @@ api.user_liked_media()*
 api.user_recent_media(user_id, count, max_id)*
 api.user_search(q, count, lat, lng, min_timestamp, max_timestamp)
 ```    
-   
+
 Relationships: http://instagr.am/developer/endpoints/relationships/
 
 ``` python
@@ -173,7 +184,7 @@ api.media(media_id)
 api.media_popular(count, max_id)
 api.media_search(q, count, lat, lng, min_timestamp, max_timestamp)
 ```
-    
+
 Comments: http://instagr.am/developer/endpoints/comments/
 
 ``` python
@@ -181,7 +192,7 @@ api.media_comments(media_id)
 api.create_media_comment(media_id, text)
 api.delete_comment(media_id, comment_id)
 ```
-    
+
 Likes: http://instagr.am/developer/endpoints/likes/
 
 ``` python
@@ -189,7 +200,7 @@ api.media_likes(media_id)
 api.like_media(media_id)
 api.unlike_media(media_id)
 ```
-    
+
 Tags: http://instagr.am/developer/endpoints/tags/
 
 ``` python
@@ -197,7 +208,7 @@ api.tag(tag_name)
 api.tag_recent_media(count, max_tag_id, tag_name)*
 api.tag_search(q, count)*
 ```
- 
+
 Locations: http://instagr.am/developer/endpoints/locations/
 
 ``` python
@@ -205,15 +216,17 @@ api.location(location_id)
 api.location_recent_media(count, max_id, location_id)*
 api.location_search(q, count, lat, lng, foursquare_id, foursquare_v2_id)
 ```
-    
+
 Geographies: http://instagr.am/developer/endpoints/geographies/
 
 ``` python
 api.geography_recent_media(count, max_id, geography_id)*
 ```
 
+
 Error handling
-------
+--------------
+
 Importing the bind module allows handling of specific error status codes. An example is provided below:
 ``` python
 from instagram.bind import InstagramAPIError
@@ -225,26 +238,35 @@ except InstagramAPIError as e:
       print "\nUser is set to private."
 ```
 
+
+Setting Timeouts
+----------------
+
+By default there is no timeout for requests to the Instagram API. You can specify a timeout in one of two ways:
+``` python
+from instagram.client import InstagramAPI
+
+# set a 30-second timeout for this particular InstagramAPI instance
+api = InstagramAPI(access_token=access_token, client_secret=client_secret, timeout=30)
+```
+or
+``` python
+import socket
+
+# Set the global default timeout, which applies to all sockets in your 
+# program where a timeout is not otherwise specified.
+socket.setdefaulttimeout(30)
+```
+
+
 Trouble Shooting
-------
+----------------
 
 If you get an error of a module not being defined during the Instagram import call, this might update a necessary package.
 ```
 sudo pip install --upgrade six
 ```
 
-Sample app
-------
-This repository includes a one-file sample app that uses the bottle framework and demonstrates
-authentication, subscriptions, and update processing. To try it out:
-
-  * Download bottle if you don't already have it: pip install bottle
-  * Download bottle-session if you don't already have it: pip install bottle-session
-  * Download and run a redis instance on port 6379 if you don't already have it. Check http://redis.io for instructions.
-  * Set your redirect URI to 'http://localhost:8515/oauth_callback' in your dev profile
-  * Open up sample\_app.py, update it with your client\_id and secret, and set redirect URI to 'http://localhost:8515/oauth_callback'
-  * Run the file; it will host a local server on port 8515.
-  * Try visiting http://localhost:8515 in your browser
 
 Contributing
 ------------
@@ -285,8 +307,9 @@ Submitting a Pull Request
 8. Submit a pull request.
 9. If you haven't already, complete the Contributor License Agreement ("CLA").
 
+
 Contributor License Agreement ("CLA")
-_____________________________________
+-------------------------------------
 In order to accept your pull request, we need you to submit a CLA. You only need
 to do this once to work on any of Instagram's or Facebook's open source projects.
 

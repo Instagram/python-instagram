@@ -1,10 +1,20 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
-  - "3.3"
   - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.6-dev"
+  - "3.7-dev"
+  - "nightly"
 install:
   - "pip install ."
-script: "python tests.py"
-
+  - "pip install -r build_requirements.txt"
+script:
+  - "coverage run tests.py"
+  - "coverage xml -o coverage.xml"
+after_success:
+  - "coveralls"
+  - "if [[ $TRAVIS_PYTHON_VERSION != 2.6 ]]; then
+         python-codacy-coverage -r coverage.xml;
+     fi"
