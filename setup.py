@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import itertools
 from setuptools import setup, find_packages
 
 setup(name="python-instagram",
