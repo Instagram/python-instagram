@@ -3,5 +3,5 @@ httplib2==0.9
 python-instagram==1.1.3
 redis==2.10.3
 simplejson==3.6.3
-beaker==1.6.4
+beaker==1.11.0
 six==1.8.0
